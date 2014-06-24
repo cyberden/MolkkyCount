@@ -193,6 +193,7 @@ namespace MollkyCount.ViewModel
                 }));
 
                 await dialog.ShowAsync();
+
             }
         }
 
