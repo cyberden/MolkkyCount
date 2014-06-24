@@ -1,1 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Files><file>\GalaSoft.MvvmLight.dll</file><file>\GalaSoft.MvvmLight.Extras.dll</file><file>\GalaSoft.MvvmLight.Platform.dll</file><file>\Microsoft.Practices.ServiceLocation.dll</file><file>\MollkyCount.exe</file></Files>

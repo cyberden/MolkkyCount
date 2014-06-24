@@ -1,6 +1,0 @@
-﻿[ResourceMetadata]
-"ResourceId"			"split.language-fr"
-"ResourceDimensions"		"language-fr-fr"
-
-[Files]
-"C:\Users\dverr.JM-BRUNEAU\documents\visual studio 2013\Projects\MollkyCount\MollkyCount\obj\Release\split.language-fr.pri"			"resources.pri"
