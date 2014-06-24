@@ -156,6 +156,7 @@ namespace MollkyCount.ViewModel
             {
                 var dlg = new MessageDialog(ResourceLoader.GetForCurrentView().GetString("ExportFailure"));
                 dlg.ShowAsync();
+
             }
             finally
             {
