@@ -1,0 +1,3 @@
+MainPackage=C:\Users\dverr.JM-BRUNEAU\documents\visual studio 2013\Projects\MollkyCount\MollkyCount\bin\Release\MollkyCount_1.1.0.3_Bundle\MollkyCount_1.1.0.3_AnyCPU.appx
+SymbolPackage=C:\Users\dverr.JM-BRUNEAU\documents\visual studio 2013\Projects\MollkyCount\MollkyCount\AppPackages\MollkyCount_1.1.0.3_Test\MollkyCount_1.1.0.3_AnyCPU.appxsym
+ResourcePack=C:\Users\dverr.JM-BRUNEAU\documents\visual studio 2013\Projects\MollkyCount\MollkyCount\bin\Release\MollkyCount_1.1.0.3_Bundle\MollkyCount_1.1.0.3_language-fr.appx

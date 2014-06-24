@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Roots >
+  <Roots.Interfaces>
+    <RootInterface FullName="Windows.UI.Xaml.Data.IValueConverter" />
+  </Roots.Interfaces>
+  <Roots.PropertyPathNames>
+    <RootPropertyPathName Name="Name" />
+    <RootPropertyPathName Name="Game" />
+    <RootPropertyPathName Name="Players" />
+    <RootPropertyPathName Name="Player" />
+    <RootPropertyPathName Name="Rank" />
+    <RootPropertyPathName Name="RemovePlayerCommand" />
+    <RootPropertyPathName Name="PlayCommand" />
+    <RootPropertyPathName Name="ShufflePlayersCommand" />
+    <RootPropertyPathName Name="CreatePlayerCommand" />
+    <RootPropertyPathName Name="AddPlayerCommand" />
+    <RootPropertyPathName Name="DefaultViewModel" />
+    <RootPropertyPathName Name="IsProgressBarVisible" />
+    <RootPropertyPathName Name="ActualWidth" />
+    <RootPropertyPathName Name="ActualHeight" />
+    <RootPropertyPathName Name="AllPlayers" />
+    <RootPropertyPathName Name="VictoryPercent" />
+    <RootPropertyPathName Name="VictoryCount" />
+    <RootPropertyPathName Name="GamesCount" />
+    <RootPropertyPathName Name="AllGames" />
+    <RootPropertyPathName Name="Status" />
+    <RootPropertyPathName Name="Date" />
+    <RootPropertyPathName Name="DataContext" />
+    <RootPropertyPathName Name="DeleteGameCommand" />
+    <RootPropertyPathName Name="NewGameCommand" />
+    <RootPropertyPathName Name="ImportDataCommand" />
+    <RootPropertyPathName Name="ExportDataCommand" />
+    <RootPropertyPathName Name="Item" />
+    <RootPropertyPathName Name="IsSelected" />
+    <RootPropertyPathName Name="CancelCommand" />
+    <RootPropertyPathName Name="OkCommand" />
+    <RootPropertyPathName Name="IsVictoryPopupOpened" />
+    <RootPropertyPathName Name="ShareCommand" />
+    <RootPropertyPathName Name="StartNewGameCommand" />
+    <RootPropertyPathName Name="EndGameCommand" />
+    <RootPropertyPathName Name="CurrentPlayer" />
+    <RootPropertyPathName Name="IsScoreInputOpened" />
+    <RootPropertyPathName Name="SetScoreCommand" />
+    <RootPropertyPathName Name="SelectedScorePlayer" />
+    <RootPropertyPathName Name="Rounds" />
+    <RootPropertyPathName Name="NewTotalScore" />
+    <RootPropertyPathName Name="Score" />
+    <RootPropertyPathName Name="RoundRank" />
+    <RootPropertyPathName Name="TotalScore" />
+    <RootPropertyPathName Name="IsExcluded" />
+    <RootPropertyPathName Name="UndoLastCommand" />
+    <RootPropertyPathName Name="CanUndoLast" />
+    <RootPropertyPathName Name="NextPlayCommand" />
+    <RootPropertyPathName Name="CanPlay" />
+  </Roots.PropertyPathNames>
+  <Roots.RootTypes>
+    <RootType FullName="Windows.UI.Xaml.Application">
+      <RootProperty Name="Resources" />
+    </RootType>
+    <RootType FullName="MollkyCount.ViewModel.ViewModelLocator" />
+    <RootType FullName="Windows.UI.Xaml.Controls.ContentDialog">
+      <RootProperty Name="Title" />
+      <RootProperty Name="PrimaryButtonText" />
+      <RootProperty Name="SecondaryButtonText" />
+      <RootProperty Name="Content" />
+      <RootEvent Name="PrimaryButtonClick" />
+      <RootEvent Name="SecondaryButtonClick" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.StackPanel">
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="Children" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Orientation" />
+      <RootEvent Name="Holding" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.TextBox">
+      <RootProperty Name="Name" />
+      <RootProperty Name="Header" />
+      <RootProperty Name="Text" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Data.Binding">
+      <RootProperty Name="UpdateSourceTrigger" />
+      <RootProperty Name="Mode" />
+      <RootProperty Name="RelativeSource" />
+      <RootProperty Name="ElementName" />
+      <RootProperty Name="Path" />
+      <RootProperty Name="Converter" />
+    </RootType>
+    <RootType FullName="MollkyCount.CreatePlayerDialog" />
+    <RootType FullName="MollkyCount.Common.BasePage">
+      <RootProperty Name="Background" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="BottomAppBar" />
+      <RootProperty Name="DataContext" />
+      <RootProperty Name="Transitions" />
+      <RootProperty Name="Resources" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.Tools.DirectUI.ProxyTypes.ThemeResourceExtension" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Grid">
+      <RootProperty Name="ChildrenTransitions" />
+      <RootProperty Name="RowDefinitions" />
+      <RootProperty Name="Children" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="ColumnDefinitions" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootEvent Name="Holding" />
+      <RootMethod Name="GetRow" />
+      <RootMethod Name="SetRow" />
+      <RootMethod Name="GetColumn" />
+      <RootMethod Name="SetColumn" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.TransitionCollection" />
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.EntranceThemeTransition" />
+    <RootType FullName="Windows.UI.Xaml.Controls.RowDefinition">
+      <RootProperty Name="Height" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListView">
+      <RootProperty Name="Name" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="AllowDrop" />
+      <RootProperty Name="IsSwipeEnabled" />
+      <RootProperty Name="SelectionMode" />
+      <RootProperty Name="CanReorderItems" />
+      <RootProperty Name="CanDragItems" />
+      <RootProperty Name="ItemTemplate" />
+      <RootProperty Name="ItemContainerStyle" />
+      <RootProperty Name="IsItemClickEnabled" />
+      <RootProperty Name="HeaderTemplate" />
+      <RootProperty Name="HorizontalContentAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootEvent Name="ItemClick" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.ContinuumNavigationTransitionInfo">
+      <RootMethod Name="GetExitElementContainer" />
+      <RootMethod Name="SetExitElementContainer" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.DataTemplate">
+      <RootProperty Name="Template" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.FlyoutBase">
+      <RootMethod Name="GetAttachedFlyout" />
+      <RootMethod Name="SetAttachedFlyout" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ColumnDefinition">
+      <RootProperty Name="Width" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
+      <RootProperty Name="Text" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Style" />
+      <RootProperty Name="Foreground" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="TextWrapping" />
+      <RootProperty Name="CharacterSpacing" />
+      <RootProperty Name="Visibility" />
+      <RootProperty Name="Opacity" />
+    </RootType>
+    <RootType FullName="Microsoft.Xaml.Tools.DirectUI.ProxyTypes.StaticResourceExtension" />
+    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyout">
+      <RootProperty Name="Items" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.MenuFlyoutItem">
+      <RootProperty Name="Text" />
+      <RootProperty Name="Command" />
+      <RootProperty Name="CommandParameter" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ListViewItem" />
+    <RootType FullName="Windows.UI.Xaml.Controls.Control">
+      <RootProperty Name="HorizontalContentAlignment" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Setter">
+      <RootProperty Name="Property" />
+      <RootProperty Name="Value" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.CommandBar">
+      <RootProperty Name="PrimaryCommands" />
+      <RootProperty Name="ClosedDisplayMode" />
+      <RootProperty Name="SecondaryCommands" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.AppBarButton">
+      <RootProperty Name="Label" />
+      <RootProperty Name="Icon" />
+      <RootProperty Name="Command" />
+      <RootProperty Name="IsEnabled" />
+    </RootType>
+    <RootType FullName="MollkyCount.NewGamePage" />
+    <RootType FullName="Windows.UI.Xaml.Data.RelativeSource" />
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.NavigationThemeTransition">
+      <RootProperty Name="DefaultNavigationTransitionInfo" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Media.Animation.CommonNavigationTransitionInfo">
+      <RootProperty Name="IsStaggeringEnabled" />
+      <RootMethod Name="GetIsStaggerElement" />
+      <RootMethod Name="SetIsStaggerElement" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Pivot">
+      <RootProperty Name="Title" />
+      <RootProperty Name="Items" />
+      <RootMethod Name="GetSlideInAnimationGroup" />
+      <RootMethod Name="SetSlideInAnimationGroup" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Primitives.Popup">
+      <RootProperty Name="IsOpen" />
+      <RootProperty Name="Child" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Width" />
+      <RootProperty Name="Height" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="Child" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ProgressBar">
+      <RootProperty Name="IsIndeterminate" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.PivotItem">
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Header" />
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ScrollViewer">
+      <RootProperty Name="VerticalScrollBarVisibility" />
+      <RootProperty Name="Content" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.RichTextBlock">
+      <RootProperty Name="TextWrapping" />
+      <RootProperty Name="FontFamily" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="Blocks" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Documents.Paragraph">
+      <RootProperty Name="Inlines" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Documents.Run">
+      <RootProperty Name="Text" />
+      <RootProperty Name="FontSize" />
+      <RootProperty Name="FontWeight" />
+      <RootProperty Name="Foreground" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Documents.LineBreak" />
+    <RootType FullName="Windows.UI.Xaml.Documents.InlineUIContainer">
+      <RootProperty Name="Child" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Image">
+      <RootProperty Name="Source" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Button">
+      <RootProperty Name="Name" />
+      <RootProperty Name="Command" />
+      <RootProperty Name="HorizontalAlignment" />
+      <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="Content" />
+      <RootProperty Name="Margin" />
+      <RootProperty Name="Background" />
+      <RootProperty Name="CommandParameter" />
+    </RootType>
+    <RootType FullName="MollkyCount.PivotPage" />
+    <RootType FullName="Windows.UI.Xaml.Controls.CheckBox">
+      <RootProperty Name="IsChecked" />
+      <RootProperty Name="VerticalAlignment" />
+    </RootType>
+    <RootType FullName="MollkyCount.PlayerPickerPage" />
+    <RootType FullName="MollkyCount.Converters.BoolToVisibilityConverter">
+      <RootProperty Name="Not" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.ComboBox">
+      <RootProperty Name="ItemsSource" />
+      <RootProperty Name="SelectedItem" />
+      <RootProperty Name="DisplayMemberPath" />
+    </RootType>
+    <RootType FullName="MollkyCount.PlayPivotPage" />
+  </Roots.RootTypes>
+</Roots>

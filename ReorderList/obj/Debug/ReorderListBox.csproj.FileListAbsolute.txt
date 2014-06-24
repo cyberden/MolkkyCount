@@ -1,0 +1,5 @@
+C:\Users\dverr.JM-BRUNEAU\Documents\Visual Studio 2013\Projects\Reorderlistbox\main\Library\Bin\Debug\ReorderListBox.dll
+C:\Users\dverr.JM-BRUNEAU\Documents\Visual Studio 2013\Projects\Reorderlistbox\main\Library\Bin\Debug\ReorderListBox.pdb
+C:\Users\dverr.JM-BRUNEAU\Documents\Visual Studio 2013\Projects\Reorderlistbox\main\Library\obj\Debug\ReorderListBox.g.resources
+C:\Users\dverr.JM-BRUNEAU\Documents\Visual Studio 2013\Projects\Reorderlistbox\main\Library\obj\Debug\ReorderListBox.dll
+C:\Users\dverr.JM-BRUNEAU\Documents\Visual Studio 2013\Projects\Reorderlistbox\main\Library\obj\Debug\ReorderListBox.pdb

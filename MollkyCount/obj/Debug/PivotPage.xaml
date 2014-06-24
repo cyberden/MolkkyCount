@@ -1,0 +1,328 @@
+﻿<common:BasePage
+    x:Class="MollkyCount.PivotPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MollkyCount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:data="using:MollkyCount.Data"
+    xmlns:common="using:MollkyCount.Common"
+    mc:Ignorable="d"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <CommonNavigationTransitionInfo
+                        IsStaggeringEnabled="True" />
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid
+        x:Name="LayoutRoot">
+        <Pivot
+            x:Uid="Pivot"
+            Title="MolkkyCount"
+            x:Name="pivot"
+            CommonNavigationTransitionInfo.IsStaggerElement="True">
+
+            <PivotItem
+                x:Uid="GamesPivotItem"
+                Margin="19,14.5,0,0"
+                Header="games"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+                <StackPanel>
+                    <Button
+                        x:Uid="NewGameBtn"
+                        Grid.Row="1"
+                        Name="NewGameBtn"
+                        Command="{Binding NewGameCommand}"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Bottom">
+                        Let's play!
+                    </Button>
+                    <ListView x:ConnectionId='1'
+                        x:Name="gamesList"
+                        ItemsSource="{Binding AllGames}"
+                        IsItemClickEnabled="True"
+                        ContinuumNavigationTransitionInfo.ExitElementContainer="True"
+                                                      >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel x:ConnectionId='2'
+                                    Margin="0,0,0,9.5"
+                                                                >
+                                    <TextBlock
+                                        Text="{Binding Date}"
+                                        TextWrapping="Wrap"
+                                        Pivot.SlideInAnimationGroup="1"
+                                        CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                        Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                        Margin="0,0,19,0" />
+                                    <TextBlock
+                                        Text="{Binding Status}"
+                                        TextWrapping="WrapWholeWords"
+                                        Pivot.SlideInAnimationGroup="2"
+                                        CommonNavigationTransitionInfo.IsStaggerElement="True"
+                                        Style="{ThemeResource ListViewItemContentTextBlockStyle}"
+                                        Margin="0,0,19,0" />
+                                    <FlyoutBase.AttachedFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem
+                                                x:Uid="RemoveGameFlyoutItem"
+                                                Text="remove"
+                                                Command="{Binding ElementName=gamesList, Path=DataContext.DeleteGameCommand}"
+                                                CommandParameter="{Binding}" />
+                                        </MenuFlyout>
+                                    </FlyoutBase.AttachedFlyout>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+                <!--Double line list with text wrapping-->
+            </PivotItem>
+
+            <PivotItem
+                x:Uid="PlayersPivotItem"
+                Margin="19,14.5,0,0"
+                Header="players">
+                <!--Double line list no text wrapping-->
+                <ListView
+                    ItemsSource="{Binding AllPlayers}"
+                    IsItemClickEnabled="True"
+                    ContinuumNavigationTransitionInfo.ExitElementContainer="True">
+                    <ListView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    x:Uid="PlayerNameHeader"
+                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                    Text="Name"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    x:Uid="PlayerPlayCountHeader"
+                                    Grid.Column="1"
+                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                    Text="Played"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    x:Uid="PlayerWonCountHeader"
+                                    Grid.Column="2"
+                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                    Text="Won"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    x:Uid="PlayerPercentWonHeader"
+                                    Grid.Column="3"
+                                    Style="{ThemeResource TitleTextBlockStyle}"
+                                    Text="%"
+                                    HorizontalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Text="{Binding Player.Name}"
+                                    Style="{StaticResource ListViewItemContentTextBlockStyle}"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{Binding GamesCount}"
+                                    Style="{StaticResource ListViewItemContentTextBlockStyle}"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Text="{Binding VictoryCount}"
+                                    Style="{StaticResource ListViewItemContentTextBlockStyle}"
+                                    HorizontalAlignment="Center" />
+                                <TextBlock
+                                    Grid.Column="3"
+                                    Text="{Binding VictoryPercent}"
+                                    Style="{StaticResource ListViewItemContentTextBlockStyle}"
+                                    HorizontalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style
+                            TargetType="ListViewItem">
+                            <Setter
+                                Property="HorizontalContentAlignment"
+                                Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </PivotItem>
+
+            <PivotItem
+                x:Uid="RulesPivotItem"
+                Margin="19,14.5,0,0"
+                Header="new"
+                CommonNavigationTransitionInfo.IsStaggerElement="True">
+
+                <ScrollViewer
+                    VerticalScrollBarVisibility="Auto">
+                    <!--<WebView x:Name="RuleWebView" />-->
+                    <RichTextBlock
+                        TextWrapping="Wrap"
+                        FontFamily="Segoe UI"
+                        FontSize="16">
+                        <Paragraph>
+                            <Run
+                                x:Uid="PrinciplesHeader"
+                                FontSize="26.667"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PhoneAccentBrush}">Principes</Run>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="PrinciplesLine1"
+                                Text="Le principe du jeu est de faire tomber les quilles en bois à l'aide du Mölkky." />
+                            <LineBreak />
+                            <Run
+                                x:Uid="PrinciplesLine2"
+                                Text="La première équipe arrivant à totaliser exactement 50 points gagne la partie." />
+                            <LineBreak />
+                            <Run
+                                x:Uid="PrinciplesLine3"
+                                Text="Le Mölkky se joue à au moins 2 joueurs, il n'y a pas de maximum. " />
+                            <LineBreak />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="StartGameHeader"
+                                FontSize="26.667"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PhoneAccentBrush}">Demarrage du jeu</Run>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="StartGameLine1"
+                                Text="Les quilles sont placées les unes contre les autres (voir schéma ci-dessous) à une distance de 3 à 4 mètres du Mölkkaari (le cadre) :" />
+                            <LineBreak />
+                            <LineBreak />
+                            <InlineUIContainer>
+                                <Image
+                                    Source="/Assets/Rules/disposition_molkky_small.PNG" />
+                            </InlineUIContainer>
+                            <LineBreak />
+                            <LineBreak />
+                            <Run
+                                x:Uid="StartGameLine2"
+                                Text="Pour la première partie, pas d'ordre particulier. Pour les parties suivantes, les joueurs évoluent dans l'ordre inverse du classement de la dernière partie." />
+                            <LineBreak />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="GamePlayHeader"
+                                FontSize="26.667"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PhoneAccentBrush}">Déroulement du jeu</Run>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="GamePlayLine1"
+                                Text="Le premier joueur lance le Mölkky en direction des quilles. Les quilles tombées sont redressées, en les plaçant à la verticale de leur base. Attention, une quille n'est pas complètement à terre , celle-ci est redressée mais n'est pas comptabilisée comme tombée." />
+                            <LineBreak />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="ScoreHeader"
+                                FontSize="26.667"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PhoneAccentBrush}">Score</Run>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="ScoreLine1"
+                                Text="Si une seule quille tombe, le score réalisé est le nombre marqué sur cette dernière. Si plusieurs quilles tombent (de 2 à 12), le score réalisé est le nombre de quilles renversées." />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run
+                                x:Uid="ScoreLine2"
+                                Text="Si un joueur réalise trois coups manqués (c'est à dire sans toucher de quilles) consécutifs, il est exclu du jeu." />
+                            <LineBreak />
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="EndGameHeader"
+                                FontSize="26.667"
+                                FontWeight="Bold"
+                                Foreground="{StaticResource PhoneAccentBrush}">Fin du jeu</Run>
+
+                        </Paragraph>
+                        <Paragraph>
+                            <Run
+                                x:Uid="EndGameLine1"
+                                Text="Le jeu se termine dès qu'un joueur atteint précisément 50 points." />
+                            <LineBreak />
+                            <LineBreak />
+                            <Run
+                                x:Uid="EndGameLine2"
+                                Text="Si le score d'un joueur dépasse 50 points, celui-ci retombe à 25." />
+                        </Paragraph>
+                    </RichTextBlock>
+                </ScrollViewer>
+            </PivotItem>
+        </Pivot>
+
+        <Popup
+            IsOpen="{Binding IsProgressBarVisible}">
+            <Border
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}"
+                Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}"
+                Background="Black">
+                <ProgressBar
+                    IsIndeterminate="True" />
+            </Border>
+        </Popup>
+            
+    </Grid>
+    
+    <Page.BottomAppBar>
+        <CommandBar ClosedDisplayMode="Minimal">
+            <CommandBar.SecondaryCommands>
+                <AppBarButton
+                    x:Uid="ExportData"
+                    x:Name="ExportDataButton"
+                    Label="Export to OneDrive"
+                    Command="{Binding ExportDataCommand}" />
+                <AppBarButton
+                    x:Uid="ImportData"
+                    x:Name="ImportDataButton"
+                    Label="Import from OneDrive"
+                    Command="{Binding ImportDataCommand}" />
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</common:BasePage>
+

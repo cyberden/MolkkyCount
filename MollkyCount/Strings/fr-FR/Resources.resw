@@ -1,0 +1,294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddPlayer.Label" xml:space="preserve">
+    <value>ajouter</value>
+  </data>
+  <data name="CreatePlayer.Label" xml:space="preserve">
+    <value>créer</value>
+  </data>
+  <data name="GamesPivotItem.Header" xml:space="preserve">
+    <value>parties</value>
+  </data>
+  <data name="NewGameAppTitleTxt.Text" xml:space="preserve">
+    <value>MolkkyCount</value>
+  </data>
+  <data name="NewGameBtn.Content" xml:space="preserve">
+    <value>Nouvelle partie</value>
+  </data>
+  <data name="NewGamePageTitleTxt.Text" xml:space="preserve">
+    <value>nouvelle partie</value>
+  </data>
+  <data name="RulesPivotItem.Header" xml:space="preserve">
+    <value>règles</value>
+  </data>
+  <data name="Pivot.Title" xml:space="preserve">
+    <value>MolkkyCount</value>
+  </data>
+  <data name="Play.Label" xml:space="preserve">
+    <value>jouer</value>
+  </data>
+  <data name="PlayerNameHeader.Text" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="PlayerPlayCountHeader.Text" xml:space="preserve">
+    <value>Jouées</value>
+  </data>
+  <data name="PlayersPivotItem.Header" xml:space="preserve">
+    <value>joueurs</value>
+  </data>
+  <data name="PlayerWonCountHeader.Text" xml:space="preserve">
+    <value>Gagnées</value>
+  </data>
+  <data name="RemoveGameFlyoutItem.Text" xml:space="preserve">
+    <value>supprimer</value>
+  </data>
+  <data name="RemoveNewGamePlayerFlyoutItem.Text" xml:space="preserve">
+    <value>supprimer</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>annuler</value>
+  </data>
+  <data name="CancelGame.Label" xml:space="preserve">
+    <value>fin</value>
+  </data>
+  <data name="CreatePlayerDialog.PrimaryButtonText" xml:space="preserve">
+    <value>ok</value>
+  </data>
+  <data name="CreatePlayerDialog.SecondaryButtonText" xml:space="preserve">
+    <value>annuler</value>
+  </data>
+  <data name="CreatePlayerDialog.Title" xml:space="preserve">
+    <value>Creation joueur</value>
+  </data>
+  <data name="CreatePlayerName.Header" xml:space="preserve">
+    <value>Nom</value>
+  </data>
+  <data name="EndGameBtn.Content" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="EndGameHeader.Text" xml:space="preserve">
+    <value>Fin du jeu</value>
+  </data>
+  <data name="EndGameLine1.Text" xml:space="preserve">
+    <value>Le jeu se termine dès qu'un joueur atteint précisément 50 points.</value>
+  </data>
+  <data name="EndGameLine2.Text" xml:space="preserve">
+    <value>Si le score d'un joueur dépasse 50 points, celui-ci retombe à 25.</value>
+  </data>
+  <data name="GamePivotItem.Header" xml:space="preserve">
+    <value>partie</value>
+  </data>
+  <data name="GamePlayHeader.Text" xml:space="preserve">
+    <value>Déroulement du jeu</value>
+  </data>
+  <data name="GamePlayLine1.Text" xml:space="preserve">
+    <value>Le premier joueur lance le Mölkky en direction des quilles. Les quilles tombées sont redressées, en les plaçant à la verticale de leur base. Attention, une quille n'est pas complètement à terre , celle-ci est redressée mais n'est pas comptabilisée comme tombée.</value>
+  </data>
+  <data name="NextPlayerLabel.Text" xml:space="preserve">
+    <value>Prochain joueur : </value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>ok</value>
+  </data>
+  <data name="PickPlayerAppTitle.Text" xml:space="preserve">
+    <value>MolkkyCount</value>
+  </data>
+  <data name="PickPlayerPageTitle.Text" xml:space="preserve">
+    <value>choix joueurs</value>
+  </data>
+  <data name="PrinciplesHeader.Text" xml:space="preserve">
+    <value>Principes</value>
+  </data>
+  <data name="PrinciplesLine1.Text" xml:space="preserve">
+    <value>Le principe du jeu est de faire tomber les quilles en bois à l’aide du Mölkky.</value>
+  </data>
+  <data name="PrinciplesLine2.Text" xml:space="preserve">
+    <value>La première équipe arrivant à totaliser exactement 50 points gagne la partie.</value>
+  </data>
+  <data name="PrinciplesLine3.Text" xml:space="preserve">
+    <value>Le Mölkky se joue à au moins 2 joueurs, il n’y a pas de maximum.</value>
+  </data>
+  <data name="ScoreHeader.Text" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="ScoreLabel.Text" xml:space="preserve">
+    <value>Scores :</value>
+  </data>
+  <data name="ScoreLine1.Text" xml:space="preserve">
+    <value>Si une seule quille tombe, le score réalisé est le nombre marqué sur cette dernière. Si plusieurs quilles tombent (de 2 à 12), le score réalisé est le nombre de quilles renversées.</value>
+  </data>
+  <data name="ScoreLine2.Text" xml:space="preserve">
+    <value>Si un joueur réalise trois coups manqués (c'est à dire sans toucher de quilles) consécutifs, il est exclu du jeu.</value>
+  </data>
+  <data name="ScorePivotItem.Header" xml:space="preserve">
+    <value>score</value>
+  </data>
+  <data name="ScorePointsHeader.Text" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="ScoreRoundHeader.Text" xml:space="preserve">
+    <value>Rang</value>
+  </data>
+  <data name="ScoreTotalPointsHeader.Text" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="StartGameHeader.Text" xml:space="preserve">
+    <value>Démarrage du jeu</value>
+  </data>
+  <data name="StartGameLine1.Text" xml:space="preserve">
+    <value>Les quilles sont placées les unes contre les autres (voir schéma ci-dessous) à une distance de 3 à 4 mètres du Mölkkaari (le cadre) :</value>
+  </data>
+  <data name="StartGameLine2.Text" xml:space="preserve">
+    <value>Pour la première partie, pas d'ordre particulier. Pour les parties suivantes, les joueurs évoluent dans l'ordre inverse du classement de la dernière partie.</value>
+  </data>
+  <data name="Undo.Label" xml:space="preserve">
+    <value>annuler</value>
+  </data>
+  <data name="WinLabel.Text" xml:space="preserve">
+    <value>Gagné!</value>
+  </data>
+  <data name="ShareWinText" xml:space="preserve">
+    <value>Hey, {0} vient de gagner sa partie de Mölkky contre {1}.</value>
+  </data>
+  <data name="ShareWinBtn.Content" xml:space="preserve">
+    <value>Partage</value>
+  </data>
+  <data name="ExportData.Label" xml:space="preserve">
+    <value>Export vers OneDrive</value>
+  </data>
+  <data name="ImportData.Label" xml:space="preserve">
+    <value>Import depuis OneDrive</value>
+  </data>
+  <data name="ExitGameConfirmation" xml:space="preserve">
+    <value>Voulez-vous vraiment terminer la partie?</value>
+  </data>
+  <data name="ExportFailure" xml:space="preserve">
+    <value>Erreur lors de l'export de vos données</value>
+  </data>
+  <data name="ExportSuccess" xml:space="preserve">
+    <value>Succès de l'export de vos données</value>
+  </data>
+  <data name="ImportFailure" xml:space="preserve">
+    <value>Erreur lors de l'import des données</value>
+  </data>
+  <data name="ImportSuccess" xml:space="preserve">
+    <value>Succès de l'import de vos données</value>
+  </data>
+</root>
