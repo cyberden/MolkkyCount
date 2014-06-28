@@ -46,7 +46,7 @@ namespace MollkyCount
             CreateGameViewModel vm = null;
             if (e.NavigationMode == NavigationMode.New)
             {
-                
+
                 if (e.Parameter is Guid && (Guid)e.Parameter != Guid.Empty)
                 {
                     vm = new CreateGameViewModel();
@@ -73,10 +73,10 @@ namespace MollkyCount
             {
                 //await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 //{
-                    ((RelayCommand)vm.PlayCommand).RaiseCanExecuteChanged();
-                    ((RelayCommand)vm.ShufflePlayersCommand).RaiseCanExecuteChanged();
-              //  });
-                
+                ((RelayCommand)vm.PlayCommand).RaiseCanExecuteChanged();
+                ((RelayCommand)vm.ShufflePlayersCommand).RaiseCanExecuteChanged();
+                //  });
+
             }
         }
 
@@ -89,6 +89,27 @@ namespace MollkyCount
 
             // If the menu was attached properly, we just need to call this handy method
             FlyoutBase.ShowAttachedFlyout(element);
+        }
+    }
+
+
+    public class PlayerTypeTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate SinglePlayerTemplate { get; set; }
+
+        public DataTemplate TeamPlayerTemplate { get; set; }
+
+        protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
+        {
+            var player = item as GamePlayerViewModel;
+
+            if (player != null)
+            {
+                if (player.Player is TeamViewModel)
+                    return TeamPlayerTemplate;
+            }
+
+            return SinglePlayerTemplate;
         }
     }
 }

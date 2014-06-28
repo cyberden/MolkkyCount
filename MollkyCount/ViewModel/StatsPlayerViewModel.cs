@@ -57,13 +57,16 @@ namespace MollkyCount.ViewModel
         #endregion
 
         #region Constructor
-        public StatsPlayerViewModel(Player model, IEnumerable<Game> allGames)
+        public StatsPlayerViewModel(Player model, IEnumerable<Game> allGames, IEnumerable<Team> allTeams)
         {
             this.Player = new PlayerViewModel() { Id = model.Id, Name = model.Name };
 
-            var allPlayerGames = allGames.Where(g => g.Status == DataModel.Enums.GameStatus.Finished && g.Players.Any(p => p.PlayerId == model.Id));
+            var allPlayerTeams = allTeams.Where(t => t.Players.Any(tp => tp.PlayerId == model.Id)).Select(t => t.Id);
+            var allPlayerGames = allGames.Where(g => g.Status == DataModel.Enums.GameStatus.Finished 
+                                                        && (g.Players.Any(p => p.PlayerId == model.Id) || (g.Players.Any(p => allPlayerTeams.Any(pt => pt == p.TeamId)))));
+
             GamesCount = allPlayerGames.Count();
-            VictoryCount = allPlayerGames.Where(g => g.Rounds.Any(r => r.PlayerId == model.Id && r.NewTotalScore == 50)).Count();
+            VictoryCount = allPlayerGames.Where(g => g.Rounds.Any(r => (r.PlayerId == model.Id || allPlayerTeams.Any(pt => pt == r.PlayerId)) && r.NewTotalScore == 50)).Count();
 
             if (GamesCount > 0)
                 VictoryPercent = string.Format("{0:P2}",(double)VictoryCount / (double)GamesCount, 2);

@@ -15,13 +15,13 @@ namespace MollkyCount.DAL
     public class Game
     {
         [DataMember]
-        public Guid Id {get;set;}
+        public Guid Id { get; set; }
 
         [DataMember]
-        public GameStatus Status {get;set;}
+        public GameStatus Status { get; set; }
 
         [DataMember]
-        public DateTime Date {get;set;}
+        public DateTime Date { get; set; }
 
         [DataMember]
         public List<GameRound> Rounds { get; set; }
@@ -41,13 +41,39 @@ namespace MollkyCount.DAL
     }
 
     [DataContract]
+    public class Team
+    {
+        [DataMember]
+        public Guid Id { get; set; }
+
+        [DataMember]
+        public string Name { get; set; }
+
+        [DataMember]
+        public List<TeamPlayer> Players { get; set; }
+    }
+
+    [DataContract]
+    public class TeamPlayer
+    {
+        [DataMember]
+        public Guid PlayerId { get; set; }
+
+        [DataMember]
+        public int Rank { get; set; }
+    }
+
+    [DataContract]
     public class GamePlayer
     {
         [DataMember]
         public Guid GameId { get; set; }
 
         [DataMember]
-        public Guid PlayerId { get; set; }
+        public Guid? PlayerId { get; set; }
+
+        [DataMember]
+        public Guid? TeamId { get; set; }
 
         [DataMember]
         public int Rank { get; set; }
@@ -57,6 +83,9 @@ namespace MollkyCount.DAL
 
         [DataMember]
         public bool IsExcluded { get; set; }
+
+        [DataMember]
+        public int? TeamPlayerRank { get; set; }
     }
 
     [DataContract]
@@ -83,9 +112,11 @@ namespace MollkyCount.DAL
 
     public class DataSourceProvider
     {
-        public static string GamesFileName = "games.xml";
+        public static string GamesFileName = "gamesV2.xml";
 
-        public static string PlayersFileName = "players.xml";
+        public static string PlayersFileName = "playersV2.xml";
+
+        public static string TeamsFileName = "teamsV2.xml";
 
         private static DataSourceProvider _dataSourceProvider = new DataSourceProvider();
 
@@ -93,7 +124,7 @@ namespace MollkyCount.DAL
 
         public ObservableCollection<Game> Games
         {
-            get { return _games; } 
+            get { return _games; }
         }
 
         private ObservableCollection<Player> _players;
@@ -102,6 +133,13 @@ namespace MollkyCount.DAL
             get { return _players; }
         }
 
+        private ObservableCollection<Team> _teams;
+        public ObservableCollection<Team> Teams
+        {
+            get { return _teams; }
+        }
+
+        #region Games
         public static async Task<IEnumerable<Game>> GetGames(bool forceReadFromFile = false)
         {
             if ((_dataSourceProvider != null && _dataSourceProvider.Games == null)
@@ -115,7 +153,7 @@ namespace MollkyCount.DAL
         {
             var games = await GetGames();
 
-            var previous = games.FirstOrDefault(g => g.Id == game.Id); 
+            var previous = games.FirstOrDefault(g => g.Id == game.Id);
             if (previous != null)
             {
                 _dataSourceProvider.Games.Remove(previous);
@@ -137,6 +175,17 @@ namespace MollkyCount.DAL
             return game;
         }
 
+        public static async Task SaveBeeingCreatedTeam(Team team)
+        {
+            await StorageHelper.Save<Team>("tempTeam.xml", team);
+        }
+
+        public static async Task<Team> RetrieveBeeingCreatedTeam()
+        {
+            var team = await StorageHelper.Load<Team>("tempTeam.xml");
+            return team;
+        }
+
         public static async Task<Game> GetGame(Guid id)
         {
             if (_dataSourceProvider != null && _dataSourceProvider.Games == null)
@@ -155,7 +204,9 @@ namespace MollkyCount.DAL
 
             await StorageHelper.Save<ObservableCollection<Game>>(GamesFileName, _dataSourceProvider.Games);
         }
+        #endregion
 
+        #region Players
         public static async Task<IEnumerable<Player>> GetPlayers(bool forceReadFromFile = false)
         {
             if ((_dataSourceProvider != null && _dataSourceProvider.Players == null) || forceReadFromFile)
@@ -170,6 +221,24 @@ namespace MollkyCount.DAL
 
             await StorageHelper.Save<ObservableCollection<Player>>(PlayersFileName, _dataSourceProvider.Players);
         }
+        #endregion
+
+        #region Teams
+        public static async Task<IEnumerable<Team>> GetTeams(bool forceReadFromFile = false)
+        {
+            if ((_dataSourceProvider != null && _dataSourceProvider.Teams == null) || forceReadFromFile)
+                await _dataSourceProvider.GetTeamsModelAsync();
+
+            return _dataSourceProvider.Teams;
+        }
+
+        public static async Task SaveTeam(Team team)
+        {
+            _dataSourceProvider.Teams.Add(team);
+
+            await StorageHelper.Save<ObservableCollection<Team>>(TeamsFileName, _dataSourceProvider.Teams);
+        }
+        #endregion
 
         private async Task GetGameModelAsync()
         {
@@ -180,6 +249,11 @@ namespace MollkyCount.DAL
         {
 
             _players = await StorageHelper.Load<ObservableCollection<Player>>(PlayersFileName);
+        }
+
+        public async Task GetTeamsModelAsync()
+        {
+            _teams = await StorageHelper.Load<ObservableCollection<Team>>(TeamsFileName);
         }
     }
 }

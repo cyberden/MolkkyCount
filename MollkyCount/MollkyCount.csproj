@@ -87,6 +87,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CreateTeamPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NewGamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -103,6 +107,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="TeamPickerPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -113,11 +121,18 @@
     <Compile Include="Common\SelectableObject.cs" />
     <Compile Include="Common\StorageHelper.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="CreateTeamPage.xaml.cs">
+      <DependentUpon>CreateTeamPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OneDrive\OneDriveFileHandler.cs" />
     <Compile Include="OneDrive\OneDriveItem.cs" />
     <Compile Include="PlayPivotPage.xaml.cs">
       <DependentUpon>PlayPivotPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TeamPickerPage.xaml.cs">
+      <DependentUpon>TeamPickerPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CreateTeamViewModel.cs" />
     <Compile Include="ViewModel\PlayersPickerViewModel.cs" />
     <Compile Include="CreatePlayerDialog.xaml.cs">
       <DependentUpon>CreatePlayerDialog.xaml</DependentUpon>
@@ -144,6 +159,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\StatsPlayerViewModel.cs" />
+    <Compile Include="ViewModel\TeamPickerViewModel.cs" />
+    <Compile Include="ViewModel\TeamViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>

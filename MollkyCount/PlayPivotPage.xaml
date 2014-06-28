@@ -58,7 +58,7 @@
                     <TextBlock
                         Grid.Row="1"
                         x:Name="nextPlayerName"
-                        Text="{Binding CurrentPlayer.Player.Name}"
+                        Text="{Binding CurrentPlayer}"
                         Style="{ThemeResource HeaderTextBlockStyle}"
                         Foreground="{StaticResource PhoneAccentBrush}"
                         HorizontalAlignment="Center" />

@@ -3,15 +3,14 @@ using MollkyCount.DAL;
 using MollkyCount.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.ApplicationModel.Resources;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
-using Windows.UI.Core;
+using Windows.UI.Input;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -28,17 +27,12 @@ namespace MollkyCount
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PlayPivotPage : BasePage
+    public sealed partial class CreateTeamPage : BasePage
     {
-        private GameViewModel defaultViewModel = null;
-        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView("Resources");
+        private CreateTeamViewModel defaultViewModel = null;
 
-        public PlayPivotPage()
-            : base()
+        public CreateTeamPage() : base()
         {
-            NavigationHelper.GoBackCommand = new RelayCommand(
-                        (object p) => { if (this.defaultViewModel != null) this.defaultViewModel.GoBack(); },
-                        (object p) => { if (this.defaultViewModel != null) return this.defaultViewModel.CanGoBack(); else return true; });
             this.InitializeComponent();
         }
 
@@ -46,11 +40,10 @@ namespace MollkyCount
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public GameViewModel DefaultViewModel
+        public CreateTeamViewModel DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
-
 
         #region NavigationHelper registration
 
@@ -71,38 +64,32 @@ namespace MollkyCount
         {
             base.OnNavigatedTo(e);
 
-            var allPlayers = await DataSourceProvider.GetPlayers();
-            var allPlayersVm = allPlayers.Select(p => new PlayerViewModel() { Id = p.Id, Name = p.Name });
+            if (e.NavigationMode == NavigationMode.New)
+            {
+                defaultViewModel = new CreateTeamViewModel() { Team = new TeamViewModel() { Id = Guid.NewGuid(), Players = new ObservableCollection<TeamPlayerViewModel>() } };
+                await DataSourceProvider.SaveBeeingCreatedTeam(defaultViewModel.Team.GetTeam());
+                
+            }
+            else if (e.NavigationMode == NavigationMode.Back)
+            {
+                defaultViewModel = new CreateTeamViewModel();
+                await defaultViewModel.LoadFromTemporaryFile();
+            }
 
-            var allTeams = await DataSourceProvider.GetTeams();
-            var allTeamsVm = await TeamViewModel.GetTeams(allTeams);
-
-            var game = await DataSourceProvider.GetGame((Guid)e.Parameter);
-
-            defaultViewModel = GameViewModel.GetViewModel(game, allPlayersVm, allTeamsVm);
             this.DataContext = defaultViewModel;
-
-            //await Window.Current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            //{
-            ((RelayCommand)defaultViewModel.UndoLastCommand).RaiseCanExecuteChanged();
-            ((RelayCommand)defaultViewModel.NextPlayCommand).RaiseCanExecuteChanged();
-            //});
-
-            DataTransferManager.GetForCurrentView().DataRequested += PivotPage_DataRequested;
         }
 
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
         {
-            base.OnNavigatedFrom(e);
-            DataTransferManager.GetForCurrentView().DataRequested -= PivotPage_DataRequested;
-        }
+            if (e.HoldingState != HoldingState.Started) return;
 
-        protected void PivotPage_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
-        {
-            defaultViewModel.HandleDataRequests(sender, args);
-        }
+            FrameworkElement element = sender as FrameworkElement;
+            if (element == null) return;
 
+            // If the menu was attached properly, we just need to call this handy method
+            FlyoutBase.ShowAttachedFlyout(element);
+        }
         #endregion
     }
+
 }

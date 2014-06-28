@@ -33,16 +33,16 @@ namespace MollkyCount.ViewModel
 
         #region Commands
         public ICommand AddPlayerCommand { get; private set; }
-        public ICommand CreatePlayerCommand { get; private set; }
         public ICommand PlayCommand { get; private set; }
         public ICommand ShufflePlayersCommand { get; private set; }
+        public ICommand AddTeamCommand { get; private set; }
         #endregion
 
         #region Constructor
         public CreateGameViewModel()
         {   
             AddPlayerCommand = new RelayCommand(AddPlayerExecute);
-            CreatePlayerCommand = new RelayCommand(CreatePlayerExecute);
+            AddTeamCommand = new RelayCommand(AddTeamExecute);
             PlayCommand = new RelayCommand(PlayExecute, PlayCanExecute);
             ShufflePlayersCommand = new RelayCommand(ShufflePlayersExecute, ShufflePlayersCanExecute);
         }
@@ -56,6 +56,7 @@ namespace MollkyCount.ViewModel
             var game = games.First(g => g.Id == sourceGameId);
 
             var players = await DataSourceProvider.GetPlayers();
+            var teams = await DataSourceProvider.GetTeams();
 
             Game = new GameViewModel()
                 {
@@ -69,7 +70,34 @@ namespace MollkyCount.ViewModel
             int rank = 1;
             foreach(var player in game.Players.OrderBy(p => p.TotalScore))
             {
-                Game.Players.Add(new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = player.PlayerId, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = rank });
+                if (player.PlayerId.HasValue)
+                {
+                    Game.Players.Add(new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = rank });
+                }
+                else
+                {
+                    var team = teams.First(pp => pp.Id == player.TeamId);
+
+                    Game.Players.Add(new GamePlayerViewModel() 
+                        { 
+                            Player = new TeamViewModel() 
+                                { 
+                                    Id = player.TeamId.Value, 
+                                    Name = team.Name, 
+                                    Players = new ObservableCollection<TeamPlayerViewModel>(team.Players.Select(tp => new TeamPlayerViewModel() 
+                                        { 
+                                            Player = new PlayerViewModel() 
+                                                { 
+                                                    Id = players.First(pp => pp.Id == tp.PlayerId).Id, 
+                                                    Name = players.First(pp => pp.Id == tp.PlayerId).Name 
+                                                }, 
+                                                Rank = tp.Rank 
+                                        })) 
+                                },
+                                Rank = rank 
+                        });
+                }
+
                 rank++;
             }
         }
@@ -78,14 +106,47 @@ namespace MollkyCount.ViewModel
         {
             var game = await DataSourceProvider.RetrieveBeeingCreatedGame();
             var players = await DataSourceProvider.GetPlayers();
+            var teams = await DataSourceProvider.GetTeams();
 
             Game = new GameViewModel()
             {
                 Id = game.Id,
-                Players = new ObservableCollection<GamePlayerViewModel>(game.Players.Select(p => new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = p.PlayerId, Name = players.First(pp => pp.Id == p.PlayerId).Name }, Rank = p.Rank })),
                 Date = DateTime.Now,
-                Status = game.Status
+                Status = game.Status,
+                Players = new ObservableCollection<GamePlayerViewModel>()
             };
+
+            foreach (var player in game.Players)
+            {
+                if (player.PlayerId.HasValue)
+                {
+                    Game.Players.Add(new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = player.Rank });
+                }
+                else
+                {
+                    var team = teams.First(pp => pp.Id == player.TeamId);
+
+                    Game.Players.Add(new GamePlayerViewModel()
+                    {
+                        Player = new TeamViewModel()
+                        {
+                            Id = player.TeamId.Value,
+                            Name = team.Name,
+                            Players = new ObservableCollection<TeamPlayerViewModel>(team.Players.Select(tp => new TeamPlayerViewModel()
+                            {
+                                Player = new PlayerViewModel()
+                                {
+                                    Id = players.First(pp => pp.Id == tp.PlayerId).Id,
+                                    Name = players.First(pp => pp.Id == tp.PlayerId).Name
+                                },
+                                Rank = tp.Rank
+                            }))
+                        },
+                        CurrentTeamPlayerRank = player.TeamPlayerRank,
+                        Rank = player.Rank
+                    });
+                }
+            }
         }
         #endregion
 
@@ -99,24 +160,15 @@ namespace MollkyCount.ViewModel
                 rootFrame.Navigate(typeof(PlayerPickerPage), "CreateGame");
         }
 
-        public async void CreatePlayerExecute(object parameter)
+        public void AddTeamExecute(object parameter)
         {
-            var newPlayer = new PlayerViewModel() { Id = Guid.NewGuid() };
+            Frame rootFrame = Window.Current.Content as Frame;
 
-            var createPlayerDialog = new CreatePlayerDialog(newPlayer);
-            var messageDialogResult = await createPlayerDialog.ShowAsync();
-
-            if (messageDialogResult == ContentDialogResult.Primary)
-            {
-                // TODO : Save player
-                Game.Players.Add(new GamePlayerViewModel(this.Game) { Player = newPlayer, Rank = Game.Players.Count + 1 });
-                await DataSourceProvider.SavePlayer(newPlayer.GetPlayer());
-                await DataSourceProvider.SaveBeeingCreatedGame(Game.GetGame());
-
-                ((RelayCommand)PlayCommand).RaiseCanExecuteChanged();
-                ((RelayCommand)ShufflePlayersCommand).RaiseCanExecuteChanged();
-            }
+            if (rootFrame != null)
+                rootFrame.Navigate(typeof(TeamPickerPage), "CreateGame");
         }
+
+        
 
         public bool PlayCanExecute(object parameter)
         {

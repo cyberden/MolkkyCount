@@ -51,6 +51,12 @@
     
     <Page.BottomAppBar>
         <CommandBar>
+            <AppBarButton
+                x:Uid="CreatePlayer"
+                x:Name="CreatePlayerButton"
+                Label="create"
+                Icon="AddFriend"
+                Command="{Binding CreatePlayerCommand}" />
             <AppBarButton x:Uid="Ok" x:Name="OkButton" Label="ok" Icon="Accept" Command="{Binding OkCommand}" />
             <AppBarButton x:Uid="Cancel" x:Name="CancelButton" Label="cancel" Icon="Cancel" Command="{Binding CancelCommand}" />
         </CommandBar>

@@ -40,7 +40,6 @@ namespace MollkyCount
             //Windows.ApplicationModel.Resources.Core.ResourceManager.Current.MainResourceMap.look(resourceId);
             //var map = ResourceManager.Current.MainResourceMap;
             //RuleWebView.NavigateToString("toto");
-            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
 
         /// <summary>

@@ -24,11 +24,12 @@ namespace MollkyCount
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class PlayerPickerPage : BasePage
+    public sealed partial class TeamPickerPage : BasePage
     {
-        private PlayersPickerViewModel defaultViewModel;
+        private NavigationHelper navigationHelper;
+        private TeamPickerViewModel defaultViewModel;
 
-        public PlayerPickerPage() : base()
+        public TeamPickerPage() : base()
         {
             this.InitializeComponent();
         }
@@ -37,25 +38,17 @@ namespace MollkyCount
         /// Gets the view model for this <see cref="Page"/>.
         /// This can be changed to a strongly typed view model.
         /// </summary>
-        public PlayersPickerViewModel DefaultViewModel
+        public TeamPickerViewModel DefaultViewModel
         {
             get { return this.defaultViewModel; }
         }
 
         public override async void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            var parameter = e.NavigationParameter as string;
-
-            defaultViewModel = new PlayersPickerViewModel();
-            await defaultViewModel.InitializeAsync(parameter);
+            defaultViewModel = new TeamPickerViewModel();
+            await defaultViewModel.InitializeAsync();
 
             this.DataContext = defaultViewModel;
         }
-
-
-        #region NavigationHelper registration
-
-
-        #endregion
     }
 }

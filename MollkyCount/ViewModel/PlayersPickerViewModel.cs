@@ -26,6 +26,17 @@ namespace MollkyCount.ViewModel
             }
         }
 
+        private TeamViewModel _team;
+        public TeamViewModel Team
+        {
+            get { return _team; }
+            set
+            {
+                _team = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private ObservableCollection<SelectableObject<PlayerViewModel>> _allPlayers;
         public ObservableCollection<SelectableObject<PlayerViewModel>> AllPlayers
         {
@@ -39,6 +50,7 @@ namespace MollkyCount.ViewModel
         #endregion
 
         #region Commands
+        public ICommand CreatePlayerCommand { get; private set; }
         public ICommand OkCommand { get; private set; }
         public ICommand CancelCommand { get; private set; }
 
@@ -47,6 +59,7 @@ namespace MollkyCount.ViewModel
         #region Constructors
         public PlayersPickerViewModel()
         {
+            CreatePlayerCommand = new RelayCommand(CreatePlayerExecute);
             OkCommand = new RelayCommand(OkExecute);
             CancelCommand = new RelayCommand(CancelExecute);
             
@@ -54,20 +67,44 @@ namespace MollkyCount.ViewModel
         #endregion
 
         #region InitializeAsync
-        public async Task InitializeAsync()
+        public async Task InitializeAsync(string parameter)
         {
-            var source = await DataSourceProvider.GetPlayers();
-            AllPlayers = new ObservableCollection<SelectableObject<PlayerViewModel>>(source.Select(p => new SelectableObject<PlayerViewModel>() { IsSelected = false, Item = new PlayerViewModel() { Id = p.Id, Name = p.Name }}));
-            var allPlayersVm = source.Select(p => new PlayerViewModel() { Id = p.Id, Name = p.Name });
+            var allTeams = await DataSourceProvider.GetTeams();
+            var allPlayers = await DataSourceProvider.GetPlayers();
 
-            var game = await DataSourceProvider.RetrieveBeeingCreatedGame();
+            var allTeamsVms = await TeamViewModel.GetTeams(allTeams);
 
-            Game = GameViewModel.GetViewModel(await DataSourceProvider.RetrieveBeeingCreatedGame(), allPlayersVm);
+            var allPlayersVm = allPlayers.Select(p => new PlayerViewModel() { Id = p.Id, Name = p.Name });
 
-            if (Game != null)
+            AllPlayers = new ObservableCollection<SelectableObject<PlayerViewModel>>(allPlayers.Select(p => new SelectableObject<PlayerViewModel>() { IsSelected = false, Item = allPlayersVm.First(pvm => pvm.Id == p.Id)}));
+
+            if (parameter == "CreateGame")
             {
-                foreach(var player in AllPlayers.Where(p => Game.Players.Any(gp => gp.Player.Id == p.Item.Id)))
-                    player.IsSelected = true;
+                var game = await DataSourceProvider.RetrieveBeeingCreatedGame();
+
+                Game = GameViewModel.GetViewModel(await DataSourceProvider.RetrieveBeeingCreatedGame(), allPlayersVm, allTeamsVms);
+
+                if (Game != null)
+                {
+                    foreach (var player in AllPlayers.Where(p => Game.Players.Any(gp => gp.Player.Id == p.Item.Id)))
+                        player.IsSelected = true;
+
+                    var unSelectablePlayers = Game.Players.Where(p => p.Player is TeamViewModel).SelectMany(p => ((TeamViewModel)p.Player).Players.Select(pp => pp.Player.Id));
+                    AllPlayers = new ObservableCollection<SelectableObject<PlayerViewModel>>(AllPlayers.Where(p => !unSelectablePlayers.Any(up => up == p.Item.Id)));
+                }
+            }
+            else if (parameter == "CreateTeam")
+            {
+                var team = await DataSourceProvider.RetrieveBeeingCreatedTeam();
+
+                var teams = await TeamViewModel.GetTeams(new List<Team>() { team });
+                Team = teams.First();
+
+                if (Team != null)
+                {
+                    foreach (var player in AllPlayers.Where(p => Team.Players.Any(gp => gp.Player.Id == p.Item.Id)))
+                        player.IsSelected = true;
+                }
             }
         }
         #endregion
@@ -86,6 +123,19 @@ namespace MollkyCount.ViewModel
         #endregion
 
         #region Command handlers
+        public async void CreatePlayerExecute(object parameter)
+        {
+            var newPlayer = new PlayerViewModel() { Id = Guid.NewGuid() };
+
+            var createPlayerDialog = new CreatePlayerDialog(newPlayer);
+            var messageDialogResult = await createPlayerDialog.ShowAsync();
+
+            if (messageDialogResult == ContentDialogResult.Primary)
+            {
+                await DataSourceProvider.SavePlayer(newPlayer.GetPlayer());
+                AllPlayers.Add(new SelectableObject<PlayerViewModel>() { IsSelected = true, Item = newPlayer });
+            }
+        }
         public async void OkExecute(object parameter)
         {
             if (this.Game != null)
@@ -105,6 +155,24 @@ namespace MollkyCount.ViewModel
                 }
 
                 await DataSourceProvider.SaveBeeingCreatedGame(Game.GetGame());
+            }
+            else if (this.Team != null)
+            {
+                foreach (var elt in AllPlayers.Where(p => p.IsSelected && !Team.Players.Any(gp => gp.Player.Id == p.Item.Id)))
+                {
+                    Team.Players.Add(new TeamPlayerViewModel() { Player = elt.Item, Rank = Team.Players.Count + 1 });
+                }
+
+                foreach (var elt in AllPlayers.Where(p => !p.IsSelected && Team.Players.Any(gp => gp.Player.Id == p.Item.Id)))
+                {
+                    var eltToRemove = Team.Players.First(p => p.Player.Id == elt.Item.Id);
+
+                    Team.Players.Remove(eltToRemove);
+                    foreach (var sourceElt in Team.Players.Where(s => s.Rank > eltToRemove.Rank))
+                        sourceElt.Rank--;
+                }
+
+                await DataSourceProvider.SaveBeeingCreatedTeam(Team.GetTeam());
             }
 
             Frame rootFrame = Window.Current.Content as Frame;

@@ -1,0 +1,118 @@
+﻿<common:BasePage
+    x:Class="MollkyCount.TeamPickerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MollkyCount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:MollkyCount.Common"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid
+        x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="19,0,0,0">
+            <TextBlock
+                x:Uid="PickTeamAppTitle"
+                Text="MOLKKYCOUNT"
+                Style="{ThemeResource TitleTextBlockStyle}"
+                Margin="0,12,0,0" />
+            <TextBlock
+                x:Uid="PickTeamPageTitle"
+                Text="pick teams"
+                Margin="0,-6.5,0,26.5"
+                Style="{ThemeResource HeaderTextBlockStyle}"
+                CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" />
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <Grid
+            Grid.Row="1"
+            x:Name="ContentRoot"
+            Margin="19,9.5,19,0">
+            <ListView
+                ItemsSource="{Binding AllTeams}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="35" />
+                                <ColumnDefinition
+                                    Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+                                    Height="Auto" />
+                                <RowDefinition
+                                    Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <CheckBox
+                                IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                VerticalAlignment="Center" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Text="{Binding Item.Name}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource ListViewItemTextBlockStyle}" />
+                            <ListView
+                                Grid.Column="1"
+                                Grid.Row="1"
+                                ItemsSource="{Binding Item.Players}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Margin="30,0,0,0"
+                                            Text="{Binding Player.Name}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton
+                x:Uid="CreateTeam"
+                x:Name="CreateTeamButton"
+                Label="create"
+                Icon="Add"
+                Command="{Binding CreateTeamCommand}" />
+            <AppBarButton
+                x:Uid="Ok"
+                x:Name="OkButton"
+                Label="ok"
+                Icon="Accept"
+                Command="{Binding OkCommand}" />
+            <AppBarButton
+                x:Uid="Cancel"
+                x:Name="CancelButton"
+                Label="cancel"
+                Icon="Cancel"
+                Command="{Binding CancelCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</common:BasePage>

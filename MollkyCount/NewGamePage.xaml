@@ -8,6 +8,125 @@
     xmlns:common="using:MollkyCount.Common"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <local:PlayerTypeTemplateSelector
+            x:Key="PlayerTypeTemplateSelector"
+            SinglePlayerTemplate="{StaticResource SinglePlayerTemplate}"
+            TeamPlayerTemplate="{StaticResource TeamPlayerTemplate}" />
+
+        <DataTemplate
+            x:Key="SinglePlayerTemplate">
+            <Grid
+                Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                Holding="Grid_Holding">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="35" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Text="{Binding Rank}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    Foreground="{StaticResource PhoneAccentBrush}"
+                    Margin="5" />
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{Binding Player.Name}"
+                    TextWrapping="Wrap"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+                <!--<Button Grid.Column="2" Command="{Binding UpCommand}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="/Images/Up.png" />
+                                    </ControlTemplate>
+                                </Button.Template>
+                                
+                            </Button>
+                            <Button Grid.Column="3" Command="{Binding DownCommand}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Image Source="/Images/Down.png" />
+                                    </ControlTemplate>
+                                </Button.Template>
+                               
+                            </Button>-->
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Uid="RemoveNewGamePlayerFlyoutItem"
+                            Text="remove"
+                            Command="{Binding RemovePlayerCommand}"
+                            CommandParameter="{Binding}" />
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate
+            x:Key="TeamPlayerTemplate">
+            <Grid
+                Margin="0,0,0,0"
+                HorizontalAlignment="Stretch"
+                Holding="Grid_Holding">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="35" />
+                    <ColumnDefinition
+                        Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="Auto" />
+                    <RowDefinition
+                        Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    Text="{Binding Rank}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    Foreground="{StaticResource PhoneAccentBrush}"
+                    Margin="5" />
+                <TextBlock
+                    Grid.Column="2"
+                    Text="{Binding Player.Name}"
+                    TextWrapping="Wrap"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center" />
+                <ListView
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Player.Players}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Margin="30,0,0,0"
+                                Text="{Binding Player.Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Uid="RemoveNewGamePlayerFlyoutItem"
+                            Text="remove"
+                            Command="{Binding RemovePlayerCommand}"
+                            CommandParameter="{Binding}" />
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
 
     <Grid
         x:Name="LayoutRoot">
@@ -56,63 +175,8 @@
                 SelectionMode="None"
                 Name="PlayersList"
                 CanReorderItems="True"
-                CanDragItems="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid
-                            Margin="0,0,0,0"
-                            HorizontalAlignment="Stretch"
-                            Holding="Grid_Holding">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition
-                                    Width="35" />
-                                <ColumnDefinition
-                                    Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock
-                                Text="{Binding Rank}"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                Foreground="{StaticResource PhoneAccentBrush}"
-                                Margin="5" />
-                            <TextBlock
-                                Grid.Column="2"
-                                Text="{Binding Player.Name}"
-                                TextWrapping="Wrap"
-                                Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center" />
-                            <!--<Button Grid.Column="2" Command="{Binding UpCommand}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="/Images/Up.png" />
-                                    </ControlTemplate>
-                                </Button.Template>
-                                
-                            </Button>
-                            <Button Grid.Column="3" Command="{Binding DownCommand}">
-                                <Button.Template>
-                                    <ControlTemplate>
-                                        <Image Source="/Images/Down.png" />
-                                    </ControlTemplate>
-                                </Button.Template>
-                               
-                            </Button>-->
-                            <FlyoutBase.AttachedFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        x:Uid="RemoveNewGamePlayerFlyoutItem"
-                                        Text="remove"
-                                        Command="{Binding RemovePlayerCommand}"
-                                        CommandParameter="{Binding}" />
-                                </MenuFlyout>
-                            </FlyoutBase.AttachedFlyout>
-                        </Grid>
-
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                CanDragItems="True"
+                ItemTemplateSelector="{StaticResource PlayerTypeTemplateSelector}">
                 <ListView.ItemContainerStyle>
                     <Style
                         TargetType="ListViewItem">
@@ -132,14 +196,20 @@
                 x:Uid="AddPlayer"
                 x:Name="AddPlayerButton"
                 Label="add"
-                Icon="Add"
-                Command="{Binding AddPlayerCommand}" />
-            <AppBarButton
-                x:Uid="CreatePlayer"
-                x:Name="CreatePlayerButton"
-                Label="create"
-                Icon="AddFriend"
-                Command="{Binding CreatePlayerCommand}" />
+                Icon="Add">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem
+                            x:Uid="AddPlayerItemMenu"
+                            Text="Player"
+                            Command="{Binding AddPlayerCommand}" />
+                        <MenuFlyoutItem
+                            x:Uid="AddTeamItemMenu"
+                            Text="Team"
+                            Command="{Binding AddTeamCommand}" />
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             <AppBarButton
                 x:Uid="ShufflePlayers"
                 x:Name="ShufflePlayersButton"

@@ -11,10 +11,20 @@ using System.Windows.Input;
 
 namespace MollkyCount.ViewModel
 {
-    public class PlayerViewModel : BaseViewModel
+    public interface IPlayerViewModel
+    {
+        #region Properties
+        Guid Id { get; set; }
+
+        string Name {get;set;}
+        #endregion
+    }
+
+    public class PlayerViewModel : BaseViewModel, IPlayerViewModel
     {
         #region Private properties
-        private GameViewModel ParentVm { get; set; }
+        private GameViewModel ParentGameVm { get; set; }
+
         #endregion
 
         #region Properties
@@ -43,11 +53,11 @@ namespace MollkyCount.ViewModel
     public class GamePlayerViewModel : BaseViewModel
     {
         #region Private properties
-        private GameViewModel ParentVm { get; set; }
+        private GameViewModel ParentGameVm { get; set; }
         #endregion
 
         #region Properties
-        public PlayerViewModel Player { get; set; }
+        public IPlayerViewModel Player { get; set; }
 
         private ObservableCollection<GameRoundViewModel> _rounds;
         public ObservableCollection<GameRoundViewModel> Rounds 
@@ -61,6 +71,8 @@ namespace MollkyCount.ViewModel
         }
 
         public int Rank { get; set; }
+
+        public int? CurrentTeamPlayerRank { get; set; }
 
         private int _totalScore;
         public int TotalScore 
@@ -87,7 +99,6 @@ namespace MollkyCount.ViewModel
         #endregion
 
         #region Commands
-
         public ICommand UpCommand { get; private set; }
         public ICommand DownCommand { get; private set; }
         public ICommand RemovePlayerCommand { get; private set; }
@@ -104,29 +115,56 @@ namespace MollkyCount.ViewModel
         public GamePlayerViewModel(GameViewModel parentVm)
             : this()
         {
-            ParentVm = parentVm;
+            ParentGameVm = parentVm;
         }
-        #endregion
 
+        #endregion
 
         #region Commands Handlers
         public void RemovePlayerExecute(object parameter)
         {
             if (parameter is GamePlayerViewModel)
             {
-                if (ParentVm != null)
-                    ParentVm.RemovePlayer((GamePlayerViewModel)parameter);
+                if (ParentGameVm != null)
+                    ParentGameVm.RemovePlayer((GamePlayerViewModel)parameter);
             }
         }
         public void UpExecute(object parameter)
         {
-            if (ParentVm != null)
-                ParentVm.MovePlayerUp(this);
+            if (ParentGameVm != null)
+                ParentGameVm.MovePlayerUp(this);
         }
         public void DownExecute(object parameter)
         {
-            if (ParentVm != null)
-                ParentVm.MovePlayerDown(this);
+            if (ParentGameVm != null)
+                ParentGameVm.MovePlayerDown(this);
+        }
+        #endregion
+
+        #region Custom Logic
+        public override string ToString()
+        {
+            if (Player is TeamViewModel)
+            {
+                return string.Format("{0} ({1})", Player.Name, ((TeamViewModel)Player).Players.ElementAt(CurrentTeamPlayerRank.Value - 1).Player.Name);
+            }
+            else return Player.Name;
+        }
+
+        public TeamPlayerViewModel GetNextTeamPlayer()
+        {
+            if (Player is TeamViewModel && CurrentTeamPlayerRank.HasValue)
+            {
+                var team = (TeamViewModel)Player;
+                if (CurrentTeamPlayerRank == team.Players.Count())
+                    CurrentTeamPlayerRank = 1;
+                else
+                    CurrentTeamPlayerRank++;
+
+                return team.Players.ElementAt(CurrentTeamPlayerRank.Value - 1);
+            }
+
+            return null;
         }
         #endregion
     }

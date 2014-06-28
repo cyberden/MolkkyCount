@@ -175,7 +175,7 @@
     <value>annuler</value>
   </data>
   <data name="CreatePlayerDialog.Title" xml:space="preserve">
-    <value>Creation joueur</value>
+    <value>creation joueur</value>
   </data>
   <data name="CreatePlayerName.Header" xml:space="preserve">
     <value>Nom</value>
@@ -290,5 +290,26 @@
   </data>
   <data name="ImportSuccess" xml:space="preserve">
     <value>Succès de l'import de vos données</value>
+  </data>
+  <data name="AddTeamItemMenu.Text" xml:space="preserve">
+    <value>Equipe</value>
+  </data>
+  <data name="CreateTeam.Label" xml:space="preserve">
+    <value>créer</value>
+  </data>
+  <data name="CreateTeamAppTitle.Text" xml:space="preserve">
+    <value>MOLKKYCOUNT</value>
+  </data>
+  <data name="CreateTeamPageTitle.Text" xml:space="preserve">
+    <value>création équipe</value>
+  </data>
+  <data name="PickTeamAppTitle.Text" xml:space="preserve">
+    <value>MolkkyCount</value>
+  </data>
+  <data name="PickTeamPageTitle.Text" xml:space="preserve">
+    <value>choix équipes</value>
+  </data>
+  <data name="ShareWinTextTitle" xml:space="preserve">
+    <value>Victoire!</value>
   </data>
 </root>

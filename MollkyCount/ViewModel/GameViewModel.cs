@@ -50,16 +50,28 @@ namespace MollkyCount.ViewModel
             }
         }
 
-        private GamePlayerViewModel _nextPlayer;
+        private GamePlayerViewModel _currentPlayer;
         public GamePlayerViewModel CurrentPlayer
         {
-            get { return _nextPlayer; }
+            get { return _currentPlayer; }
             set
             {
-                _nextPlayer = value;
+                _currentPlayer = value;
                 RaisePropertyChanged();
             }
         }
+
+        private TeamPlayerViewModel _currentTeamPlayer;
+        public TeamPlayerViewModel CurrentTeamPlayer
+        {
+            get { return _currentTeamPlayer; }
+            set
+            {
+                _currentTeamPlayer = value;
+                RaisePropertyChanged();
+            }
+        }
+        
 
         private GamePlayerViewModel _selectedScorePlayer;
         public GamePlayerViewModel SelectedScorePlayer
@@ -234,6 +246,11 @@ namespace MollkyCount.ViewModel
             else
             {
                 CurrentPlayer = player;
+                if (CurrentPlayer.Player is TeamViewModel)
+                {
+                    CurrentTeamPlayer = CurrentPlayer.GetNextTeamPlayer();
+                }
+
                 SelectedScorePlayer = CurrentPlayer;
 
                 if (Players.Where(p => p != CurrentPlayer).All(p => p.IsExcluded))
@@ -405,7 +422,7 @@ namespace MollkyCount.ViewModel
                 Status = Status
             };
 
-            game.Players = Players.Select(p => new GamePlayer() { GameId = Id, IsExcluded = p.IsExcluded, PlayerId = p.Player.Id, TotalScore = p.TotalScore, Rank = p.Rank }).ToList();
+            game.Players = Players.Select(p => new GamePlayer() { GameId = Id, IsExcluded = p.IsExcluded, PlayerId = p.Player is PlayerViewModel ? p.Player.Id : (Guid?)null, TeamId = p.Player is TeamViewModel ? p.Player.Id : (Guid?)null, TotalScore = p.TotalScore, Rank = p.Rank, TeamPlayerRank = p.CurrentTeamPlayerRank }).ToList();
             game.Rounds = Rounds.Select(p => new GameRound() { Id = p.Id, GameId = Id, Score = p.Score, NewTotalScore = p.NewTotalScore, PlayerId = p.Player, Rank = p.RoundRank }).ToList();
 
             return game;
@@ -415,6 +432,7 @@ namespace MollkyCount.ViewModel
         #region Share
         public void HandleDataRequests(DataTransferManager sender, DataRequestedEventArgs args)
         {
+            string localizedTitleString = CurrentResourceLoader.GetString("ShareWinTextTitle");
             string localizedString = CurrentResourceLoader.GetString("ShareWinText");
             string formattedString = string.Format(localizedString, CurrentPlayer.Player.Name, string.Join(",", Players.Where(p => p != CurrentPlayer).Select(p => p.Player.Name)));
 
@@ -422,7 +440,7 @@ namespace MollkyCount.ViewModel
 
             var deferral = request.GetDeferral();
 
-            request.Data.Properties.Title = "Mölkky win!";
+            request.Data.Properties.Title = localizedTitleString;
             request.Data.Properties.Description = "Share Mölkky win dialog";
             request.Data.SetText(formattedString);
 
@@ -430,7 +448,7 @@ namespace MollkyCount.ViewModel
         }
         #endregion
 
-        public static GameViewModel GetViewModel(Game game, IEnumerable<PlayerViewModel> allPlayers)
+        public static GameViewModel GetViewModel(Game game, IEnumerable<PlayerViewModel> allPlayers, IEnumerable<TeamViewModel> allTeams)
         {
             var gameVm = new GameViewModel() { Date = game.Date, Id = game.Id, Status = game.Status, Rounds = new ObservableCollection<GameRoundViewModel>(), Players = new ObservableCollection<GamePlayerViewModel>() };
 
@@ -452,7 +470,8 @@ namespace MollkyCount.ViewModel
                         Rank = player.Rank,
                         TotalScore = player.TotalScore,
                         Rounds = new ObservableCollection<GameRoundViewModel>(gameVm.Rounds.Where(r => r.Player == player.PlayerId)),
-                        Player = allPlayers.First(p => p.Id == player.PlayerId)
+                        Player = player.PlayerId.HasValue ? (IPlayerViewModel)allPlayers.First(p => p.Id == player.PlayerId.Value) : allTeams.First(t => t.Id == player.TeamId.Value),
+                        CurrentTeamPlayerRank = player.TeamPlayerRank
                     });
                 }
             }

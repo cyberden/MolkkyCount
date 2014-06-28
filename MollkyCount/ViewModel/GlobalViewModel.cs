@@ -116,9 +116,10 @@ namespace MollkyCount.ViewModel
                 await handler.Initialize();
 
                 var resPLayers = await handler.DownloadFile(DataSourceProvider.PlayersFileName);
+                var resTeams = await handler.DownloadFile(DataSourceProvider.TeamsFileName);
                 var resGames = await handler.DownloadFile(DataSourceProvider.GamesFileName);
 
-                if (resPLayers == OperationStatus.Completed && resGames == OperationStatus.Completed)
+                if (resPLayers == OperationStatus.Completed && resGames == OperationStatus.Completed && resTeams == OperationStatus.Completed)
                 {
                     await MapViewModel(true);
 
@@ -147,7 +148,8 @@ namespace MollkyCount.ViewModel
                 await handler.Initialize();
                 
                 var res = await handler.UploadFile(DataSourceProvider.PlayersFileName);
-                var res2 = await handler.UploadFile(DataSourceProvider.GamesFileName);
+                var res2 = await handler.UploadFile(DataSourceProvider.TeamsFileName);
+                var res3 = await handler.UploadFile(DataSourceProvider.GamesFileName);
 
                 var dlg = new MessageDialog(ResourceLoader.GetForCurrentView().GetString("ExportSuccess"));
                 await dlg.ShowAsync();
@@ -168,15 +170,18 @@ namespace MollkyCount.ViewModel
         #region Mapping
         public async Task MapViewModel(bool forceRead = false)
         {
-            var players = await DataSourceProvider.GetPlayers(true);
-            var games = await DataSourceProvider.GetGames(true);
+            var players = await DataSourceProvider.GetPlayers(forceRead);
+            var teams = await DataSourceProvider.GetTeams(forceRead);
+            var games = await DataSourceProvider.GetGames(forceRead);
 
-            AllPlayers = new ObservableCollection<StatsPlayerViewModel>(players.OrderBy(p => p.Name).Select(g => new StatsPlayerViewModel(g, games)));
+            AllPlayers = new ObservableCollection<StatsPlayerViewModel>(players.OrderBy(p => p.Name).Select(g => new StatsPlayerViewModel(g, games, teams)));
+
+            var allTeamsVm = await TeamViewModel.GetTeams(teams);
 
             AllGames = new ObservableCollection<GameViewModel>();
             foreach (var game in games.Where(g => g.Status != DataModel.Enums.GameStatus.Canceled).OrderByDescending(g => g.Date))
             {
-                AllGames.Add(GameViewModel.GetViewModel(game, AllPlayers.Select(p => p.Player)));
+                AllGames.Add(GameViewModel.GetViewModel(game, AllPlayers.Select(p => p.Player), allTeamsVm));
             }
         }
         #endregion

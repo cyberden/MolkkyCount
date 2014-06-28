@@ -1,0 +1,149 @@
+﻿<common:BasePage
+    x:Class="MollkyCount.CreateTeamPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MollkyCount"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:common="using:MollkyCount.Common"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid
+        x:Name="LayoutRoot">
+
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel
+            Grid.Row="0"
+            Margin="19,0,0,0">
+            <TextBlock
+                x:Uid="CreateTeamAppTitle"
+                Text="MOLKKYCOUNT"
+                Style="{ThemeResource TitleTextBlockStyle}"
+                Margin="0,12,0,0" />
+            <TextBlock
+                x:Uid="CreateTeamPageTitle"
+                Text="create team"
+                Margin="0,-6.5,0,0"
+                Style="{ThemeResource HeaderTextBlockStyle}"
+                CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}" />
+        </StackPanel>
+
+        <!--TODO: Content should be placed within the following grid-->
+        <Grid
+            Grid.Row="1"
+            x:Name="ContentRoot"
+            Margin="19,0,19,0">
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="*" />
+            </Grid.RowDefinitions>
+
+            <TextBox
+                x:Uid="CreateTeamNameTextBox"
+                Header="Name"
+                Text="{Binding Team.Name, Mode=TwoWay}"
+                IsEnabled="True" />
+
+            <ListView
+                Grid.Row="1"
+                HorizontalAlignment="Stretch"
+                ItemsSource="{Binding Team.Players}"
+                ContinuumNavigationTransitionInfo.ExitElementContainer="True"
+                AllowDrop="True"
+                IsSwipeEnabled="True"
+                SelectionMode="None"
+                Name="PlayersList"
+                CanReorderItems="True"
+                CanDragItems="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            Holding="Grid_Holding">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="35" />
+                                <ColumnDefinition
+                                    Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Text="{Binding Rank}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                Foreground="{StaticResource PhoneAccentBrush}"
+                                Margin="5" />
+                            <TextBlock
+                                Grid.Column="2"
+                                Text="{Binding Player.Name}"
+                                TextWrapping="Wrap"
+                                Style="{ThemeResource ListViewItemTextBlockStyle}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+                            <FlyoutBase.AttachedFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        x:Uid="RemoveNewTeamPlayerFlyoutItem"
+                                        Text="remove"
+                                        Command="{Binding RemovePlayerCommand}"
+                                        CommandParameter="{Binding}" />
+                                </MenuFlyout>
+                            </FlyoutBase.AttachedFlyout>
+                        </Grid>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style
+                        TargetType="ListViewItem">
+                        <Setter
+                            Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+        </Grid>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton
+                x:Uid="AddPlayer"
+                x:Name="AddPlayerButton"
+                Label="add"
+                Icon="Add"
+                Command="{Binding AddPlayerCommand}" />
+            <AppBarButton
+                x:Uid="Ok"
+                x:Name="OkButton"
+                Label="ok"
+                Icon="Accept"
+                IsEnabled="{Binding CanTeamBeValidated}"
+                Command="{Binding OkCommand}" />
+            <AppBarButton
+                x:Uid="Cancel"
+                x:Name="CancelButton"
+                Label="cancel"
+                Icon="Cancel"
+                Command="{Binding CancelCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</common:BasePage>
