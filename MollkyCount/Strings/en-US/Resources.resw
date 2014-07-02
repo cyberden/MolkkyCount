@@ -300,6 +300,9 @@
   <data name="CreateTeamAppTitle.Text" xml:space="preserve">
     <value>MOLKKYCOUNT</value>
   </data>
+  <data name="CreateTeamNameTextBox.Header" xml:space="preserve">
+    <value>name</value>
+  </data>
   <data name="CreateTeamPageTitle.Text" xml:space="preserve">
     <value>create team</value>
   </data>
@@ -308,6 +311,9 @@
   </data>
   <data name="PickTeamPageTitle.Text" xml:space="preserve">
     <value>pick teams</value>
+  </data>
+  <data name="RemoveNewTeamPlayerFlyoutItem.Text" xml:space="preserve">
+    <value>remove</value>
   </data>
   <data name="ShareWinTextTitle" xml:space="preserve">
     <value>Victory!</value>

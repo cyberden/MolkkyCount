@@ -19,7 +19,20 @@ namespace MollkyCount.ViewModel
         public TeamViewModel Team
         {
             get { return _team; }
-            set { _team = value; RaisePropertyChanged(); }
+            set 
+            {
+                _team = value; 
+                RaisePropertyChanged();
+ 
+                 if (value != null)
+                     _team.PropertyChanged += TeamPropertyChanged;
+            }
+        }
+
+        void TeamPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Name")
+                CanTeamBeValidated = Team.Players.Any() && !string.IsNullOrEmpty(Team.Name);
         }
 
         private bool _canTeamBeValidated;
@@ -61,7 +74,7 @@ namespace MollkyCount.ViewModel
             var team = await DataSourceProvider.RetrieveBeeingCreatedTeam();
             var teams = await TeamViewModel.GetTeams(new List<Team>() { team });
 
-            CanTeamBeValidated = team.Players.Any();
+            CanTeamBeValidated = team.Players.Any() && !string.IsNullOrEmpty(team.Name);
 
             Team = teams.First();
         }

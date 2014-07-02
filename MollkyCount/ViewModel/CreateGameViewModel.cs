@@ -94,7 +94,8 @@ namespace MollkyCount.ViewModel
                                                 Rank = tp.Rank 
                                         })) 
                                 },
-                                Rank = rank 
+                                Rank = rank,
+                                CurrentTeamPlayerRank = 1
                         });
                 }
 

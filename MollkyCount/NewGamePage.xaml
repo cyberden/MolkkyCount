@@ -108,9 +108,24 @@
                     ItemsSource="{Binding Player.Players}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock
-                                Margin="30,0,0,0"
-                                Text="{Binding Player.Name}" />
+                            <Grid
+                                Margin="20,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition
+                                        Width="Auto" />
+                                    <ColumnDefinition
+                                        Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Ellipse
+                                    Height="15"
+                                    Width="15"
+                                    Margin="5"
+                                    Fill="{ThemeResource PhoneAccentBrush}" />
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Text="{Binding Player.Name}"
+                                    Style="{ThemeResource ListViewItemContentTextBlockStyle}" />
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

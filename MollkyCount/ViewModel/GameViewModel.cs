@@ -245,11 +245,12 @@ namespace MollkyCount.ViewModel
             }
             else
             {
-                CurrentPlayer = player;
-                if (CurrentPlayer.Player is TeamViewModel)
+                if (player.Player is TeamViewModel)
                 {
-                    CurrentTeamPlayer = CurrentPlayer.GetNextTeamPlayer();
+                    CurrentTeamPlayer = player.GetNextTeamPlayer();
                 }
+
+                CurrentPlayer = player;
 
                 SelectedScorePlayer = CurrentPlayer;
 

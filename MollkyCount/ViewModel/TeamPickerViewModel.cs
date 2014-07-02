@@ -75,9 +75,15 @@ namespace MollkyCount.ViewModel
             {
                 var beeingCreatedTeam = await DataSourceProvider.RetrieveBeeingCreatedTeam();
 
-                foreach(var team in AllTeams.Where(p => Game.Players.Any(gp => gp.Player.Id == p.Item.Id)
-                                                        || p.Item.Id == beeingCreatedTeam.Id))
-                    team.IsSelected = true;
+                if (beeingCreatedTeam != null)
+                {
+                    foreach (var team in AllTeams.Where(p => Game.Players.Any(gp => gp.Player.Id == p.Item.Id)
+                                                            || p.Item.Id == beeingCreatedTeam.Id))
+                        team.IsSelected = true;
+
+                    // reset.
+                    await DataSourceProvider.SaveBeeingCreatedTeam(null);
+                }
 
 
             }
