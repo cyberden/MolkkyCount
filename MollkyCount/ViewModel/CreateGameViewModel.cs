@@ -121,13 +121,13 @@ namespace MollkyCount.ViewModel
             {
                 if (player.PlayerId.HasValue)
                 {
-                    Game.Players.Add(new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = player.Rank });
+                    Game.Players.Add(new GamePlayerViewModel(Game) { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = player.Rank });
                 }
                 else
                 {
                     var team = teams.First(pp => pp.Id == player.TeamId);
 
-                    Game.Players.Add(new GamePlayerViewModel()
+                    Game.Players.Add(new GamePlayerViewModel(Game)
                     {
                         Player = new TeamViewModel()
                         {

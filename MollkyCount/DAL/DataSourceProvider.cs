@@ -201,7 +201,6 @@ namespace MollkyCount.DAL
             {
                 _dataSourceProvider.Games.Remove(previous);
             }
-
             await StorageHelper.Save<ObservableCollection<Game>>(GamesFileName, _dataSourceProvider.Games);
         }
         #endregion

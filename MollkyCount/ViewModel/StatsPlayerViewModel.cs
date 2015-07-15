@@ -66,7 +66,11 @@ namespace MollkyCount.ViewModel
                                                         && (g.Players.Any(p => p.PlayerId == model.Id) || (g.Players.Any(p => allPlayerTeams.Any(pt => pt == p.TeamId)))));
 
             GamesCount = allPlayerGames.Count();
-            VictoryCount = allPlayerGames.Where(g => g.Rounds.Any(r => (r.PlayerId == model.Id || allPlayerTeams.Any(pt => pt == r.PlayerId)) && r.NewTotalScore == 50)).Count();
+
+            // Victoire si score == 50 ou seul joueur non exclu.
+            VictoryCount = allPlayerGames.Where(g => 
+                                    (g.Rounds.Any(r => (r.PlayerId == model.Id || allPlayerTeams.Any(pt => pt == r.PlayerId)) && r.NewTotalScore == 50)) 
+                                    || (g.Players.Count(p => (p.PlayerId != model.Id && !allPlayerTeams.Any(pt => pt == p.PlayerId) && !p.IsExcluded)) == 0) ).Count();
 
             if (GamesCount > 0)
                 VictoryPercent = string.Format("{0:P2}",(double)VictoryCount / (double)GamesCount, 2);

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="58387NimelStudio.MlkkyCount" Publisher="CN=63CF883A-9C80-477E-AAF9-93BB25344799" Version="1.1.1.1" />
+  <Identity Name="58387NimelStudio.MlkkyCount" Publisher="CN=63CF883A-9C80-477E-AAF9-93BB25344799" Version="1.1.1.3" />
   <mp:PhoneIdentity PhoneProductId="e83a56e9-04d8-43b9-82fe-be0bdfefd2aa" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>MölkkyCount</DisplayName>

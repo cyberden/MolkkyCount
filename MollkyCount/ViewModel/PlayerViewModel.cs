@@ -53,7 +53,12 @@ namespace MollkyCount.ViewModel
     public class GamePlayerViewModel : BaseViewModel
     {
         #region Private properties
-        private GameViewModel ParentGameVm { get; set; }
+        private GameViewModel _parentGameVm;
+        private GameViewModel ParentGameVm 
+        {
+            get { return _parentGameVm; }
+            set { _parentGameVm = value; }
+        }
         #endregion
 
         #region Properties
