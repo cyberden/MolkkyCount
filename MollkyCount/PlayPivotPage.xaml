@@ -1,547 +1,573 @@
 ﻿<common:BasePage
-    x:Class="MollkyCount.PlayPivotPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MollkyCount"
-    xmlns:localmodels="using:MollkyCount.ViewModel"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:converters="using:MollkyCount.Converters"
-    xmlns:common="using:MollkyCount.Common"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.Resources>
-        <converters:BoolToVisibilityConverter
-            x:Key="BoolToVisConverter" />
-        <converters:BoolToVisibilityConverter
-            x:Key="InvertBoolToVisConverter"
-            Not="True" />
-    </Page.Resources>
+  x:Class="MollkyCount.PlayPivotPage"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:MollkyCount"
+  xmlns:localmodels="using:MollkyCount.ViewModel"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:converters="using:MollkyCount.Converters"
+  xmlns:common="using:MollkyCount.Common"
+  mc:Ignorable="d"
+  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+  <Page.Resources>
+    <converters:BoolToVisibilityConverter
+      x:Key="BoolToVisConverter" />
+    <converters:BoolToVisibilityConverter
+      x:Key="InvertBoolToVisConverter"
+      Not="True" />
+  </Page.Resources>
 
-    <Grid
-        x:Name="LayoutRoot">
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition />
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
+  <Grid
+    x:Name="LayoutRoot">
+    <Grid.ChildrenTransitions>
+      <TransitionCollection>
+        <EntranceThemeTransition />
+      </TransitionCollection>
+    </Grid.ChildrenTransitions>
 
-        <!--TODO: Content should be placed within the following grid-->
+    <!--TODO: Content should be placed within the following grid-->
 
-        <Pivot
-            x:Uid="Pivot"
-            Title="MolkkyCount"
-            x:Name="gamePivot"
-            CommonNavigationTransitionInfo.IsStaggerElement="True">
-            <PivotItem
-                x:Uid="GamePivotItem"
-                Margin="19,14.5,0,0"
-                Header="game"
-                CommonNavigationTransitionInfo.IsStaggerElement="True">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                        x:Uid="NextPlayerLabel"
-                        x:Name="nextPlayerLabel"
-                        Text="Next player : "
-                        Style="{ThemeResource SubheaderTextBlockStyle}"
-                        HorizontalAlignment="Center" />
-                    <TextBlock
-                        Grid.Row="1"
-                        x:Name="nextPlayerName"
-                        Text="{Binding CurrentPlayer}"
-                        Style="{ThemeResource HeaderTextBlockStyle}"
-                        Foreground="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Center" />
-                    <TextBlock
-                        Grid.Row="2"
-                        x:Uid="ScoreLabel"
-                        x:Name="scoreLabel"
-                        Text="Scores : "
-                        Style="{ThemeResource SubheaderTextBlockStyle}"
-                        HorizontalAlignment="Center" />
-                    <ListView
-                        Grid.Row="3"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        ItemsSource="{Binding Players}"
-                        HorizontalContentAlignment="Stretch">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid
-                                    Margin="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Text="{Binding Player.Name}"
-                                        Style="{ThemeResource TitleTextBlockStyle}"
-                                        Visibility="{Binding IsExcluded, Converter={StaticResource InvertBoolToVisConverter}}" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Text="{Binding TotalScore}"
-                                        Style="{ThemeResource TitleTextBlockStyle}"
-                                        Foreground="{StaticResource PhoneAccentBrush}"
-                                        Visibility="{Binding IsExcluded, Converter={StaticResource InvertBoolToVisConverter}}" />
-
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Text="{Binding Player.Name}"
-                                        Opacity="0.25"
-                                        Style="{ThemeResource TitleTextBlockStyle}"
-                                        Visibility="{Binding IsExcluded, Converter={StaticResource BoolToVisConverter}}" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Text="{Binding TotalScore}"
-                                        Opacity="0.25"
-                                        Style="{ThemeResource TitleTextBlockStyle}"
-                                        Foreground="{StaticResource PhoneAccentBrush}"
-                                        Visibility="{Binding IsExcluded, Converter={StaticResource BoolToVisConverter}}" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemContainerStyle>
-                            <Style
-                                TargetType="ListViewItem">
-                                <Setter
-                                    Property="HorizontalContentAlignment"
-                                    Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-                </Grid>
-            </PivotItem>
-
-            <PivotItem
-                x:Uid="ScorePivotItem"
-                Margin="19,14.5,0,0"
-                Header="score"
-                CommonNavigationTransitionInfo.IsStaggerElement="True">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <ComboBox
-                        ItemsSource="{Binding Players}"
-                        SelectedItem="{Binding SelectedScorePlayer, Mode=TwoWay}"
-                        DisplayMemberPath="Player.Name" />
-
-                    <ListView
-                        Grid.Row="1"
-                        ItemsSource="{Binding SelectedScorePlayer.Rounds}"
-                        HorizontalContentAlignment="Stretch"
-                        HorizontalAlignment="Stretch">
-                        <ListView.HeaderTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        x:Uid="ScoreRoundHeader"
-                                        Style="{ThemeResource SubheaderTextBlockStyle}"
-                                        Text="Round"
-                                        HorizontalAlignment="Center" />
-                                    <TextBlock
-                                        x:Uid="ScorePointsHeader"
-                                        Grid.Column="1"
-                                        Style="{ThemeResource SubheaderTextBlockStyle}"
-                                        Text="Points"
-                                        HorizontalAlignment="Center" />
-                                    <TextBlock
-                                        x:Uid="ScoreTotalPointsHeader"
-                                        Grid.Column="2"
-                                        Style="{ThemeResource SubheaderTextBlockStyle}"
-                                        Text="Total"
-                                        HorizontalAlignment="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.HeaderTemplate>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                        <ColumnDefinition
-                                            Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        Text="{Binding RoundRank}"
-                                        Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                        HorizontalAlignment="Center" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Text="{Binding Score}"
-                                        Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                        HorizontalAlignment="Center" />
-                                    <TextBlock
-                                        Grid.Column="2"
-                                        Text="{Binding NewTotalScore}"
-                                        Style="{ThemeResource ListViewItemTextBlockStyle}"
-                                        HorizontalAlignment="Center" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        <ListView.ItemContainerStyle>
-                            <Style
-                                TargetType="ListViewItem">
-                                <Setter
-                                    Property="HorizontalContentAlignment"
-                                    Value="Stretch" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
-
-                </Grid>
-            </PivotItem>
-        </Pivot>
-
-        <Popup
-            x:Name="SetScorePopup"
-            IsOpen="{Binding IsScoreInputOpened}">
-            <Border
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}"
-                Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition
-                            Width="*" />
-                        <ColumnDefinition
-                            Width="*" />
-                        <ColumnDefinition
-                            Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Height="*" />
-                        <RowDefinition
-                            Height="*" />
-                        <RowDefinition
-                            Height="*" />
-                        <RowDefinition
-                            Height="*" />
-                        <RowDefinition
-                            Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Button
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="1">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="1"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Column="1"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="2">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="2"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Column="2"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="3">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="3"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="1"
-                        Grid.Column="0"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="4">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="4"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="5">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="5"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="1"
-                        Grid.Column="2"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="6">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="6"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="0"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="7">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="7"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="1"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="8">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="8"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="2"
-                        Grid.Column="2"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="9">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="9"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="3"
-                        Grid.Column="0"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="10">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="10"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="11">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="11"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="3"
-                        Grid.Column="2"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="12">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="12"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-
-                    <Button
-                        Grid.Row="4"
-                        Grid.Column="1"
-                        Margin="5"
-                        Background="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        Command="{Binding SetScoreCommand}"
-                        CommandParameter="0">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="0"
-                            Style="{ThemeResource HeaderTextBlockStyle}" />
-                    </Button>
-                </Grid>
-            </Border>
-        </Popup>
-
-        <Popup
-            x:Name="VictoryPopup"
-            IsOpen="{Binding IsVictoryPopupOpened}">
-            <Border
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}"
-                Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}"
-                Background="Black">
+    <Pivot
+      x:Uid="Pivot"
+      Title="MolkkyCount"
+      x:Name="gamePivot"
+      CommonNavigationTransitionInfo.IsStaggerElement="True">
+      <PivotItem
+        x:Uid="GamePivotItem"
+        Margin="19,14.5,0,0"
+        Header="game"
+        CommonNavigationTransitionInfo.IsStaggerElement="True">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+          </Grid.RowDefinitions>
+          <TextBlock
+            x:Uid="NextPlayerLabel"
+            x:Name="nextPlayerLabel"
+            Text="Next player : "
+            Style="{ThemeResource SubheaderTextBlockStyle}"
+            HorizontalAlignment="Center" />
+          <TextBlock
+            Grid.Row="1"
+            x:Name="nextPlayerName"
+            Text="{Binding CurrentPlayer}"
+            Style="{ThemeResource HeaderTextBlockStyle}"
+            Foreground="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Center" />
+          <Grid
+            Grid.Row="2"
+            HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition
+                Width="Auto" />
+              <ColumnDefinition
+                Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock
+              x:Name="nextPlayerTriesLeft"
+              Text="{Binding CurrentPlayer.TriesCountLeft}"
+              Style="{ThemeResource SubheaderTextBlockStyle}"
+              Foreground="{StaticResource PhoneAccentBrush}"
+              HorizontalAlignment="Right" />
+            <TextBlock
+              Grid.Column="1"
+              x:Uid="TriesLeftCountLabel"
+              x:Name="triesLeftCountLabel"
+              Text=" tries left"
+              Style="{ThemeResource SubheaderTextBlockStyle}"
+              HorizontalAlignment="Left" />
+          </Grid>
+          
+          <TextBlock
+            Grid.Row="3"
+            x:Uid="ScoreLabel"
+            x:Name="scoreLabel"
+            Text="Scores : "
+            Style="{ThemeResource SubheaderTextBlockStyle}"
+            HorizontalAlignment="Center" />
+          <ListView
+            Grid.Row="4"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            ItemsSource="{Binding Players}"
+            HorizontalContentAlignment="Stretch">
+            <ListView.ItemTemplate>
+              <DataTemplate>
                 <Grid
-                    VerticalAlignment="Center">
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="Auto" />
-                        <RowDefinition
-                            Height="Auto" />
-                    </Grid.RowDefinitions>
+                  Margin="5">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                      Width="*" />
+                    <ColumnDefinition
+                      Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <TextBlock
+                    Grid.Column="0"
+                    Text="{Binding Player.Name}"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Visibility="{Binding IsExcluded, Converter={StaticResource InvertBoolToVisConverter}}" />
+                  <TextBlock
+                    Grid.Column="1"
+                    Text="{Binding TotalScore}"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Foreground="{StaticResource PhoneAccentBrush}"
+                    Visibility="{Binding IsExcluded, Converter={StaticResource InvertBoolToVisConverter}}" />
 
-                    <TextBlock
-                        Grid.Row="0"
-                        x:Uid="WinLabel"
-                        x:Name="winLabel"
-                        Text="You Win!"
-                        Style="{ThemeResource HeaderTextBlockStyle}"
-                        Foreground="{StaticResource PhoneAccentBrush}"
-                        HorizontalAlignment="Center" />
-                    <TextBlock
-                        Grid.Row="1"
-                        x:Name="winPlayerLabel"
-                        Text="{Binding CurrentPlayer.Player.Name}"
-                        Style="{ThemeResource HeaderTextBlockStyle}"
-                        HorizontalAlignment="Center" />
-
-                    <StackPanel
-                        Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center">
-                        <Button
-                            Margin="5"
-                            x:Uid="EndGameBtn"
-                            Content="Fin"
-                            Command="{Binding EndGameCommand}" />
-                        <Button
-                            Margin="5"
-                            x:Uid="NewGameBtn"
-                            Content="Nouvelle partie"
-                            Command="{Binding StartNewGameCommand}" />
-                        <Button
-                            Margin="5"
-                            x:Uid="ShareWinBtn"
-                            Content="Share"
-                            Command="{Binding ShareCommand}" />
-                    </StackPanel>
+                  <TextBlock
+                    Grid.Column="0"
+                    Text="{Binding Player.Name}"
+                    Opacity="0.25"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Visibility="{Binding IsExcluded, Converter={StaticResource BoolToVisConverter}}" />
+                  <TextBlock
+                    Grid.Column="1"
+                    Text="{Binding TotalScore}"
+                    Opacity="0.25"
+                    Style="{ThemeResource TitleTextBlockStyle}"
+                    Foreground="{StaticResource PhoneAccentBrush}"
+                    Visibility="{Binding IsExcluded, Converter={StaticResource BoolToVisConverter}}" />
                 </Grid>
-            </Border>
-        </Popup>
-    </Grid>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+              <Style
+                TargetType="ListViewItem">
+                <Setter
+                  Property="HorizontalContentAlignment"
+                  Value="Stretch" />
+              </Style>
+            </ListView.ItemContainerStyle>
+          </ListView>
+        </Grid>
+      </PivotItem>
 
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton
-                x:Uid="Play"
-                x:Name="PlayButton"
-                Label="play"
-                Icon="Next"
-                Command="{Binding NextPlayCommand}"
-                IsEnabled="{Binding CanPlay}"/>
-            <AppBarButton
-                x:Uid="Undo"
-                x:Name="UndoLast"
-                Label="undo"
-                Icon="Undo"
-                Command="{Binding UndoLastCommand}"
-                IsEnabled="{Binding CanUndoLast}"/>
-            <AppBarButton
-                x:Uid="CancelGame"
-                x:Name="CancelGameButton"
-                Label="cancel"
-                Icon="Cancel"
-                Command="{Binding CancelCommand}" />
-        </CommandBar>
-    </Page.BottomAppBar>
+      <PivotItem
+        x:Uid="ScorePivotItem"
+        Margin="19,14.5,0,0"
+        Header="score"
+        CommonNavigationTransitionInfo.IsStaggerElement="True">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="*" />
+          </Grid.RowDefinitions>
+
+          <ComboBox
+            ItemsSource="{Binding Players}"
+            SelectedItem="{Binding SelectedScorePlayer, Mode=TwoWay}"
+            DisplayMemberPath="Player.Name" />
+
+          <ListView
+            Grid.Row="1"
+            ItemsSource="{Binding SelectedScorePlayer.Rounds}"
+            HorizontalContentAlignment="Stretch"
+            HorizontalAlignment="Stretch">
+            <ListView.HeaderTemplate>
+              <DataTemplate>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                      Width="*" />
+                    <ColumnDefinition
+                      Width="*" />
+                    <ColumnDefinition
+                      Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock
+                    x:Uid="ScoreRoundHeader"
+                    Style="{ThemeResource SubheaderTextBlockStyle}"
+                    Text="Round"
+                    HorizontalAlignment="Center" />
+                  <TextBlock
+                    x:Uid="ScorePointsHeader"
+                    Grid.Column="1"
+                    Style="{ThemeResource SubheaderTextBlockStyle}"
+                    Text="Points"
+                    HorizontalAlignment="Center" />
+                  <TextBlock
+                    x:Uid="ScoreTotalPointsHeader"
+                    Grid.Column="2"
+                    Style="{ThemeResource SubheaderTextBlockStyle}"
+                    Text="Total"
+                    HorizontalAlignment="Center" />
+                </Grid>
+              </DataTemplate>
+            </ListView.HeaderTemplate>
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                      Width="*" />
+                    <ColumnDefinition
+                      Width="*" />
+                    <ColumnDefinition
+                      Width="*" />
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock
+                    Text="{Binding RoundRank}"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    HorizontalAlignment="Center" />
+                  <TextBlock
+                    Grid.Column="1"
+                    Text="{Binding Score}"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    HorizontalAlignment="Center" />
+                  <TextBlock
+                    Grid.Column="2"
+                    Text="{Binding NewTotalScore}"
+                    Style="{ThemeResource ListViewItemTextBlockStyle}"
+                    HorizontalAlignment="Center" />
+                </Grid>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+              <Style
+                TargetType="ListViewItem">
+                <Setter
+                  Property="HorizontalContentAlignment"
+                  Value="Stretch" />
+              </Style>
+            </ListView.ItemContainerStyle>
+          </ListView>
+
+        </Grid>
+      </PivotItem>
+    </Pivot>
+
+    <Popup
+      x:Name="SetScorePopup"
+      IsOpen="{Binding IsScoreInputOpened}">
+      <Border
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}"
+        Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition
+              Width="*" />
+            <ColumnDefinition
+              Width="*" />
+            <ColumnDefinition
+              Width="*" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition
+              Height="*" />
+            <RowDefinition
+              Height="*" />
+            <RowDefinition
+              Height="*" />
+            <RowDefinition
+              Height="*" />
+            <RowDefinition
+              Height="*" />
+          </Grid.RowDefinitions>
+
+          <Button
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="1">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="1"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Column="1"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="2">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="2"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Column="2"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="3">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="3"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="4">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="4"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="1"
+            Grid.Column="1"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="5">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="5"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="1"
+            Grid.Column="2"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="6">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="6"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="2"
+            Grid.Column="0"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="7">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="7"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="2"
+            Grid.Column="1"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="8">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="8"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="9">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="9"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="10">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="10"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="11">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="11"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="3"
+            Grid.Column="2"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="12">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="12"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+
+          <Button
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="5"
+            Background="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Command="{Binding SetScoreCommand}"
+            CommandParameter="0">
+            <TextBlock
+              VerticalAlignment="Center"
+              Foreground="White"
+              Text="0"
+              Style="{ThemeResource HeaderTextBlockStyle}" />
+          </Button>
+        </Grid>
+      </Border>
+    </Popup>
+
+    <Popup
+      x:Name="VictoryPopup"
+      IsOpen="{Binding IsVictoryPopupOpened}">
+      <Border
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch"
+        Width="{Binding ElementName=LayoutRoot, Path=ActualWidth}"
+        Height="{Binding ElementName=LayoutRoot, Path=ActualHeight}"
+        Background="Black">
+        <Grid
+          VerticalAlignment="Center">
+          <Grid.RowDefinitions>
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+            <RowDefinition
+              Height="Auto" />
+          </Grid.RowDefinitions>
+
+          <TextBlock
+            Grid.Row="0"
+            x:Uid="WinLabel"
+            x:Name="winLabel"
+            Text="You Win!"
+            Style="{ThemeResource HeaderTextBlockStyle}"
+            Foreground="{StaticResource PhoneAccentBrush}"
+            HorizontalAlignment="Center" />
+          <TextBlock
+            Grid.Row="1"
+            x:Name="winPlayerLabel"
+            Text="{Binding CurrentPlayer.Player.Name}"
+            Style="{ThemeResource HeaderTextBlockStyle}"
+            HorizontalAlignment="Center" />
+
+          <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+            <Button
+              Margin="5"
+              x:Uid="EndGameBtn"
+              Content="Fin"
+              Command="{Binding EndGameCommand}" />
+            <Button
+              Margin="5"
+              x:Uid="NewGameBtn"
+              Content="Nouvelle partie"
+              Command="{Binding StartNewGameCommand}" />
+            <Button
+              Margin="5"
+              x:Uid="ShareWinBtn"
+              Content="Share"
+              Command="{Binding ShareCommand}" />
+          </StackPanel>
+        </Grid>
+      </Border>
+    </Popup>
+  </Grid>
+
+  <Page.BottomAppBar>
+    <CommandBar>
+      <AppBarButton
+        x:Uid="Play"
+        x:Name="PlayButton"
+        Label="play"
+        Icon="Next"
+        Command="{Binding NextPlayCommand}"
+        IsEnabled="{Binding CanPlay}" />
+      <AppBarButton
+        x:Uid="Undo"
+        x:Name="UndoLast"
+        Label="undo"
+        Icon="Undo"
+        Command="{Binding UndoLastCommand}"
+        IsEnabled="{Binding CanUndoLast}" />
+      <AppBarButton
+        x:Uid="CancelGame"
+        x:Name="CancelGameButton"
+        Label="cancel"
+        Icon="Cancel"
+        Command="{Binding CancelCommand}" />
+    </CommandBar>
+  </Page.BottomAppBar>
 </common:BasePage>

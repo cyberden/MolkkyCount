@@ -225,6 +225,8 @@ namespace MollkyCount.ViewModel
             this.CurrentPlayer.Rounds.Add(gameRound);
 
             var currentPlayerRounds = this.Rounds.Where(r => r.Player == CurrentPlayer.Player.Id).OrderByDescending(r => r.RoundRank);
+
+            CurrentPlayer.TriesCountLeft = 3 - currentPlayerRounds.TakeWhile(r => r.Score == 0).Count();
             if (currentPlayerRounds.Count() >= 3 && currentPlayerRounds.Take(3).Sum(r => r.Score) == 0)
             {
                 CurrentPlayer.IsExcluded = true;
@@ -282,12 +284,16 @@ namespace MollkyCount.ViewModel
                 this.Rounds.Remove(round);
                 player.Rounds.Remove(round);
 
+                if (round.Score == 0)
+                    player.TriesCountLeft++;
+
                 CurrentPlayer = player;
 
                 if (player.Rounds.Any())
                     CurrentPlayer.TotalScore = player.Rounds.Last().NewTotalScore;
                 else
                     CurrentPlayer.TotalScore = 0;
+
 
                 await DataSourceProvider.SaveGame(GetGame());
 
@@ -423,7 +429,18 @@ namespace MollkyCount.ViewModel
                 Status = Status
             };
 
-            game.Players = Players.Select(p => new GamePlayer() { GameId = Id, IsExcluded = p.IsExcluded, PlayerId = p.Player is PlayerViewModel ? p.Player.Id : (Guid?)null, TeamId = p.Player is TeamViewModel ? p.Player.Id : (Guid?)null, TotalScore = p.TotalScore, Rank = p.Rank, TeamPlayerRank = p.CurrentTeamPlayerRank }).ToList();
+            game.Players = Players.Select(p => new GamePlayer() 
+                                                { 
+                                                    GameId = Id, 
+                                                    IsExcluded = p.IsExcluded, 
+                                                    PlayerId = p.Player is PlayerViewModel ? p.Player.Id : (Guid?)null, 
+                                                    TeamId = p.Player is TeamViewModel ? p.Player.Id : (Guid?)null, 
+                                                    TotalScore = p.TotalScore, 
+                                                    TriesCountLeft = p.TriesCountLeft,
+                                                    Rank = p.Rank, 
+                                                    TeamPlayerRank = p.CurrentTeamPlayerRank 
+                                                }).ToList();
+
             game.Rounds = Rounds.Select(p => new GameRound() { Id = p.Id, GameId = Id, Score = p.Score, NewTotalScore = p.NewTotalScore, PlayerId = p.Player, Rank = p.RoundRank }).ToList();
 
             return game;
@@ -470,6 +487,7 @@ namespace MollkyCount.ViewModel
                         IsExcluded = player.IsExcluded,
                         Rank = player.Rank,
                         TotalScore = player.TotalScore,
+                        TriesCountLeft = player.TriesCountLeft,
                         Rounds = new ObservableCollection<GameRoundViewModel>(gameVm.Rounds.Where(r => r.Player == player.PlayerId)),
                         Player = player.PlayerId.HasValue ? (IPlayerViewModel)allPlayers.First(p => p.Id == player.PlayerId.Value) : allTeams.First(t => t.Id == player.TeamId.Value),
                         CurrentTeamPlayerRank = player.TeamPlayerRank

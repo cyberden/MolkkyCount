@@ -318,4 +318,7 @@
   <data name="ShareWinTextTitle" xml:space="preserve">
     <value>Victoire!</value>
   </data>
+  <data name="TriesLeftCountLabel.Text" xml:space="preserve">
+    <value> essai(s) restant(s)</value>
+  </data>
 </root>

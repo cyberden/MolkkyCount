@@ -72,7 +72,7 @@ namespace MollkyCount.ViewModel
             {
                 if (player.PlayerId.HasValue)
                 {
-                    Game.Players.Add(new GamePlayerViewModel() { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = rank });
+                    Game.Players.Add(new GamePlayerViewModel() { TriesCountLeft = 3, Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = rank });
                 }
                 else
                 {
@@ -80,6 +80,7 @@ namespace MollkyCount.ViewModel
 
                     Game.Players.Add(new GamePlayerViewModel() 
                         { 
+                            TriesCountLeft = 3,
                             Player = new TeamViewModel() 
                                 { 
                                     Id = player.TeamId.Value, 
@@ -121,7 +122,7 @@ namespace MollkyCount.ViewModel
             {
                 if (player.PlayerId.HasValue)
                 {
-                    Game.Players.Add(new GamePlayerViewModel(Game) { Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = player.Rank });
+                    Game.Players.Add(new GamePlayerViewModel(Game) { TriesCountLeft = 3, Player = new PlayerViewModel() { Id = player.PlayerId.Value, Name = players.First(pp => pp.Id == player.PlayerId).Name }, Rank = player.Rank });
                 }
                 else
                 {
@@ -129,6 +130,7 @@ namespace MollkyCount.ViewModel
 
                     Game.Players.Add(new GamePlayerViewModel(Game)
                     {
+                        TriesCountLeft = 3,
                         Player = new TeamViewModel()
                         {
                             Id = player.TeamId.Value,

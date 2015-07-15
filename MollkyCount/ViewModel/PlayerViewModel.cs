@@ -100,6 +100,17 @@ namespace MollkyCount.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        private int _triesCountLeft;
+        public int TriesCountLeft
+        {
+            get { return _triesCountLeft; }
+            set
+            {
+                _triesCountLeft = value;
+                RaisePropertyChanged();
+            }
+        }
         
         #endregion
 

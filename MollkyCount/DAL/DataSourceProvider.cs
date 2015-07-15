@@ -82,6 +82,9 @@ namespace MollkyCount.DAL
         public int TotalScore { get; set; }
 
         [DataMember]
+        public int TriesCountLeft { get; set; }
+
+        [DataMember]
         public bool IsExcluded { get; set; }
 
         [DataMember]
